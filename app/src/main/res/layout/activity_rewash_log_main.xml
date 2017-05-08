@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_rewash_log_main">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="hwardak.rewashlog.RewashLogMain">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter employee id..."
+            android:textSize="30sp"
+            android:inputType="number"
+            android:gravity="center_vertical|center_horizontal" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/nameLinearLayout">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Name: "
+                android:textSize="30sp"
+                />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:enabled="false"
+                android:id="@+id/nameEditText"
+                android:textSize="30sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/timeLinearLayout">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Time: "
+                android:textSize="30sp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:enabled="false"
+                android:id="@+id/timeEditText"
+                android:textSize="30sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/dateLinearLayout">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Date: "
+                android:textSize="30sp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:enabled="false"
+                android:id="@+id/dateEditText"
+                android:textSize="30sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:id="@+id/washPackageLinearLayout">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Wash Package: "
+                android:textSize="30sp"/>
+
+            <RadioGroup
+                android:id="@+id/washPackageRadioGroup"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:textSize="30sp">
+
+                <RadioButton
+                    android:id="@+id/quickRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Quick"
+                    android:textSize="30sp"/>
+
+                <RadioButton
+                    android:id="@+id/fullRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Full"
+                    android:textSize="30sp"/>
+
+                <RadioButton
+                    android:id="@+id/luxuryRadioButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Luxury"
+                    android:textSize="30sp"/>
+
+
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/reasonLinearLayout">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Reason: "
+                android:textSize="30sp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Not clean."
+                    android:textSize="30sp"
+                    android:id="@+id/notCleanCheckbox" />
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No soap."
+                    android:textSize="30sp"
+                    android:id="@+id/noSoapCheckbox" />
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Left over soap."
+                    android:textSize="30sp"
+                    android:id="@+id/leftOverSoapCheckbox" />
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Did not dry properly."
+                    android:textSize="30sp"
+                    android:id="@+id/notDryCheckbox" />
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Expired code."
+                    android:textSize="30sp"
+                    android:id="@+id/expiredCodeCheckbox" />
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Customer satisfaction."
+                    android:textSize="30sp"
+                    android:id="@+id/customerSatisfactionCheckbox" />
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Test Wash."
+                    android:textSize="30sp"
+                    android:id="@+id/testWashCheckbox" />
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Wash Code: "
+                android:textSize="30sp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/codeEditText"
+                android:textSize="30sp"
+                android:layout_gravity="bottom"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textSize="30sp"
+            android:id="@+id/saveButton"
+            android:enabled="false"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp" />
+
+    </LinearLayout>
+
+
+
+</ScrollView>
