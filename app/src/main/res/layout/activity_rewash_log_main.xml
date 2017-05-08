@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_rewash_log_main">
+    android:id="@+id/mainScrollView"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +18,8 @@
             android:hint="Enter employee id..."
             android:textSize="30sp"
             android:inputType="number"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            android:id="@+id/employeeIdEditText" />
 
 
         <LinearLayout
@@ -39,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:enabled="false"
-                android:id="@+id/nameEditText"
+                android:id="@+id/employeeNameEditText"
                 android:textSize="30sp"
                 />
 
@@ -235,7 +237,30 @@
                 android:layout_gravity="bottom"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="15sp"
+            android:id="@+id/instructionsLinearLayout">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:minLines="3"
+                android:textSize="30sp"
+                android:text=" Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello"
+                android:id="@+id/instructionsTextView" />
 
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="ok"
+                android:textSize="30sp"
+                android:id="@+id/instructionsOkButton" />
+        </LinearLayout>
         <Button
             android:layout_width="175dp"
             android:layout_height="wrap_content"
