@@ -2,6 +2,9 @@ package hwardak.rewashlog;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -53,6 +56,8 @@ public class RewashLogMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rewash_log_main);
 
+       EmployeeList employeeList = new EmployeeList();
+
         mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
 
         nameLinearLayout = (LinearLayout) findViewById(R.id.nameLinearLayout);
@@ -85,8 +90,56 @@ public class RewashLogMain extends AppCompatActivity {
         instructionsOkButton = (Button) findViewById(R.id.instructionsOkButton);
 
         hideAllLayouts();
+
+        applyTextChangeListener();
     }
 
+    private void applyTextChangeListener() {
+        employeeIdEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Log.i("beforeTextChangeEF:", s.toString());
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.i("onTextChangeEF:", s.toString());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.i("afterTextChangeEF:", s.toString());
+                // Create methods in the dataAccess class to check if this employeeId belongs to
+                //anyone.
+                if(true/**/){
+                    //The employee ID exists in the employees table.
+                    //the form will be loaded with their name.
+                    loadNameTimeDate(s);
+                }
+
+                }
+
+
+        });
+    }
+
+    /*
+       Retrieves the name employee name, current date and time, sets the Views to visible, and
+       fill the form three fields with the oppropriate info.
+     */
+    private void loadNameTimeDate(Editable s) {
+        nameLinearLayout.setVisibility(View.VISIBLE);
+        employeeNameEditText.setText(EmployeeList.EMPLOYEES.get(s));
+        timeLinearLayout.setVisibility(View.VISIBLE);
+        dateLinearLayout.setVisibility(View.VISIBLE);
+
+    }
+
+    /*
+     * Sets the entire form to invisble, except the employee ID EditText.
+     */
     private void hideAllLayouts() {
         nameLinearLayout.setVisibility(View.INVISIBLE);
         timeLinearLayout.setVisibility(View.INVISIBLE);
@@ -95,6 +148,5 @@ public class RewashLogMain extends AppCompatActivity {
         reasonLinearLayout.setVisibility(View.INVISIBLE);
         instructionsLinearLayout.setVisibility(View.INVISIBLE);
     }
-
 
 }
