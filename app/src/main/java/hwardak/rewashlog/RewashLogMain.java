@@ -59,6 +59,9 @@ public class RewashLogMain extends AppCompatActivity {
 
         employeeDataAccess = new EmployeeDataAccess(this);
 
+        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
+        employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
+
         mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
 
         nameLinearLayout = (LinearLayout) findViewById(R.id.nameLinearLayout);
@@ -114,9 +117,7 @@ public class RewashLogMain extends AppCompatActivity {
                 Log.i("afterTextChangeEF:", s.toString());
                 // Create methods in the dataAccess class to check if this employeeId belongs to
                 //anyone.
-                if(true/**/){
-                    //The employee ID exists in the employees table.
-                    //the form will be loaded with their name.
+                if(employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
                     loadNameTimeDate(s);
                 }
 
@@ -132,7 +133,7 @@ public class RewashLogMain extends AppCompatActivity {
      */
     private void loadNameTimeDate(Editable s) {
         nameLinearLayout.setVisibility(View.VISIBLE);
-        employeeNameEditText.setText(EmployeeList.EMPLOYEES.get(s));
+        employeeNameEditText.setText(employeeDataAccess.getEmployeeName(Integer.parseInt(s.toString())));
         timeLinearLayout.setVisibility(View.VISIBLE);
         dateLinearLayout.setVisibility(View.VISIBLE);
 

@@ -1,5 +1,6 @@
 package hwardak.rewashlog;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -36,6 +37,18 @@ public class EmployeeDataAccess {
         dbHelper.close();
     }
 
+    public void addEmployeeToTable(int i, String s) {
+        this.open();
+        if (!doesEmployeeExist(i)) {
+            ContentValues values = new ContentValues();
+            values.put(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_ID, String.valueOf(i));
+            values.put(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME, s);
+            database.insert(RewashLogDBOpenHelper.TABLE_EMPLOYEES, null, values);
+            Log.d(LOGTAG, "Employee " + i + " added");
+        } else {
+            Log.d(LOGTAG, "Employee " + i + " Exists already");
+        }
+    }
     public boolean doesEmployeeExist(int employeeId){
         Cursor cursor =
                 database.query(RewashLogDBOpenHelper.TABLE_EMPLOYEES, ALL_EMPLOYEE_TABLE_COLUMNS,
@@ -49,6 +62,16 @@ public class EmployeeDataAccess {
             return false;
         }
 
+    }
+
+    public String getEmployeeName(int i){
+        Cursor cursor =
+                database.query(RewashLogDBOpenHelper.TABLE_EMPLOYEES,
+                        new String[] {RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME},
+                        RewashLogDBOpenHelper.COLUMN_EMPLOYEE_ID + " = ?",
+                        new String[]{Integer.toString(i)}, null, null, null);
+        cursor.moveToNext();
+        return cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME));
     }
 
 }
