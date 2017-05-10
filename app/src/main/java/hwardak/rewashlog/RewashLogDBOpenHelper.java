@@ -9,7 +9,7 @@ import android.util.Log;
  * Created by HWardak on 2017-05-08.
  */
 
-public class RewashLogDBOpenHelper extends SQLiteOpenHelper{
+public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
 
 
     private static final String LOGTAG = "DATABASE: ";
@@ -17,9 +17,9 @@ public class RewashLogDBOpenHelper extends SQLiteOpenHelper{
     private static int DATABASE_VERSION = 1;
 
 
-    private static final String TABLE_EMPLOYEES = "employees";
-    private static final String COLUMN_EMPLOYEE_ID = "_id";
-    private static final String COLUMN_EMPLOYEE_NAME = "name";
+    public static final String TABLE_EMPLOYEES = "employees";
+    public static final String COLUMN_EMPLOYEE_ID = "_id";
+    public static final String COLUMN_EMPLOYEE_NAME = "name";
 
     private static final String EMPLOYEE_TABLE_CREATE
             = "CREATE TABLE " + TABLE_EMPLOYEES + " ("
@@ -29,7 +29,7 @@ public class RewashLogDBOpenHelper extends SQLiteOpenHelper{
 
 
     private static final String TABLE_REWASHES = "rewashes";
-    private static final String COLUMN_REWASH_ID = "rewashID";
+    public static final String COLUMN_REWASH_ID = "rewashID";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_TIME = "time";
     private static final String COLUMN_DATE = "date";

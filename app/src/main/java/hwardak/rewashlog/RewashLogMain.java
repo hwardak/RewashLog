@@ -48,6 +48,7 @@ public class RewashLogMain extends AppCompatActivity {
     private Button saveButton;
     private Button instructionsOkButton;
 
+    EmployeeDataAccess employeeDataAccess;
 
 
 
@@ -56,7 +57,7 @@ public class RewashLogMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rewash_log_main);
 
-       EmployeeList employeeList = new EmployeeList();
+        employeeDataAccess = new EmployeeDataAccess(this);
 
         mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
 
