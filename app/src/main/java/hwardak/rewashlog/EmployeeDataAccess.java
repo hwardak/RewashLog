@@ -57,9 +57,9 @@ public class EmployeeDataAccess {
         Cursor cursor =
                 database.rawQuery("SELECT 1 FROM " + RewashLogDBOpenHelper.TABLE_EMPLOYEES + " WHERE _id= \"" + employeeId + " \" LIMIT 1", null);
 
-        this.close();
 
         Log.d(LOGTAG, "Returned " + cursor.getCount() + " rows");
+        this.close();
 
         if (cursor.getCount() > 0) {
             return true;
@@ -70,6 +70,7 @@ public class EmployeeDataAccess {
     }
 
     public String getEmployeeName(int i) {
+        this.open();
         Cursor cursor =
                 database.query(RewashLogDBOpenHelper.TABLE_EMPLOYEES,
                         new String[]{RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME},

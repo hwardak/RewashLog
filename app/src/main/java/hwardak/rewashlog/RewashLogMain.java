@@ -48,6 +48,7 @@ public class RewashLogMain extends AppCompatActivity {
     private Button instructionsOkButton;
 
     EmployeeDataAccess employeeDataAccess;
+    RewashDataAccess rewashDataAccess;
 
     private String washType ="";
     private String reason = "";
@@ -62,6 +63,7 @@ public class RewashLogMain extends AppCompatActivity {
         setContentView(R.layout.activity_rewash_log_main);
 
         employeeDataAccess = new EmployeeDataAccess(this);
+        rewashDataAccess = new RewashDataAccess(this);
 
         employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
         employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
@@ -207,7 +209,7 @@ public class RewashLogMain extends AppCompatActivity {
 
 
     public void saveButtonOnClick(View view) {
-
+        rewashDataAccess.addRewashToTable(name, time, date, washType, reason);
 
     }
 }

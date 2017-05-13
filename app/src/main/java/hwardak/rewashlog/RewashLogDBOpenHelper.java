@@ -28,13 +28,13 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
 
 
 
-    private static final String TABLE_REWASHES = "rewashes";
+    public static final String TABLE_REWASHES = "rewashes";
     public static final String COLUMN_REWASH_ID = "rewashID";
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_TIME = "time";
-    private static final String COLUMN_DATE = "date";
-    private static final String COLUMN_WASH_PACKAGE = "washPackage";
-    private static final String COLUMN_REASON = "reason";
+    public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_WASH_PACKAGE = "washPackage";
+    public static final String COLUMN_REASON = "reason";
 
     private static final String REWASH_TABLE_CREATE
             = "CREATE TABLE " + TABLE_REWASHES + " ("
