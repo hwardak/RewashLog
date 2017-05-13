@@ -59,8 +59,8 @@ public class RewashLogMain extends AppCompatActivity {
 
         employeeDataAccess = new EmployeeDataAccess(this);
 
-        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
-        employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
+//        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
+//        employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
 
         mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
 
@@ -117,7 +117,7 @@ public class RewashLogMain extends AppCompatActivity {
                 Log.i("afterTextChangeEF:", s.toString());
                 // Create methods in the dataAccess class to check if this employeeId belongs to
                 //anyone.
-                if(employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
+                if(s.length() > 0 && employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
                     loadNameTimeDate(s);
                 }
 

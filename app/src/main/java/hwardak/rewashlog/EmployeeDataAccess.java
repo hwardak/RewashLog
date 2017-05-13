@@ -23,7 +23,7 @@ public class EmployeeDataAccess {
     };
 
 
-    public EmployeeDataAccess(Context context){
+    public EmployeeDataAccess(Context context) {
         dbHelper = new RewashLogDBOpenHelper(context);
     }
 
@@ -49,14 +49,16 @@ public class EmployeeDataAccess {
             Log.d(LOGTAG, "Employee " + i + " Exists already");
         }
     }
-    public boolean doesEmployeeExist(int employeeId){
+
+    public boolean doesEmployeeExist(int employeeId) {
+        this.open();
+
         Cursor cursor =
-                database.query(RewashLogDBOpenHelper.TABLE_EMPLOYEES, ALL_EMPLOYEE_TABLE_COLUMNS,
-                null, null, null, null, null);
+                database.rawQuery("SELECT 1 FROM " + RewashLogDBOpenHelper.TABLE_EMPLOYEES + " WHERE _id= \"" + employeeId + " \" LIMIT 1", null);
 
         Log.d(LOGTAG, "Returned " + cursor.getCount() + " rows");
 
-        if(cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             return true;
         } else {
             return false;
@@ -64,14 +66,16 @@ public class EmployeeDataAccess {
 
     }
 
-    public String getEmployeeName(int i){
+    public String getEmployeeName(int i) {
         Cursor cursor =
                 database.query(RewashLogDBOpenHelper.TABLE_EMPLOYEES,
-                        new String[] {RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME},
+                        new String[]{RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME},
                         RewashLogDBOpenHelper.COLUMN_EMPLOYEE_ID + " = ?",
                         new String[]{Integer.toString(i)}, null, null, null);
-        cursor.moveToNext();
-        return cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME));
+        if (cursor.getCount() > 0) {
+            cursor.moveToNext();
+            return cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME));
+        }
+        return null;
     }
-
 }
