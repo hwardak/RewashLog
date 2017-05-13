@@ -106,41 +106,35 @@
                 android:text="Wash Package: "
                 android:textSize="30sp"/>
 
-            <RadioGroup
-                android:id="@+id/washPackageRadioGroup"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:textSize="30sp">
 
-                <RadioButton
-                    android:id="@+id/quickRadioButton"
+
+                <Button
+                    android:id="@+id/quickButton"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Quick"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp"
+                    android:onClick="washTypeButtonOnClick"/>
 
-                <RadioButton
-                    android:id="@+id/fullRadioButton"
+                <Button
+                    android:id="@+id/fullButton"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Full"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp"
+                    android:onClick="washTypeButtonOnClick"/>
 
-                <RadioButton
-                    android:id="@+id/luxuryRadioButton"
+                <Button
+                    android:id="@+id/luxuryButton"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Luxury"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp"
+                    android:onClick="washTypeButtonOnClick"/>
 
-
-
-            </RadioGroup>
 
         </LinearLayout>
 
@@ -267,10 +261,9 @@
             android:text="Save"
             android:textSize="30sp"
             android:id="@+id/saveButton"
-            android:enabled="false"
-
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp" />
+            android:onClick="saveButtonOnClick"
+             />
 
     </LinearLayout>
 

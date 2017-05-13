@@ -1,5 +1,6 @@
 package hwardak.rewashlog;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -34,10 +35,9 @@ public class RewashLogMain extends AppCompatActivity {
     private EditText timeEditText;
     private EditText dateEditText;
 
-    private RadioGroup washPackageRadioGroup;
-    private RadioButton quickRadioButton;
-    private RadioButton fullRadioButton;
-    private RadioButton luxuryRadioButton;
+    private Button quickButton;
+    private Button fullButton;
+    private Button luxuryButton;
 
     private CheckBox notCleanCheckbox;
     private CheckBox noSoapCheckbox;
@@ -52,7 +52,8 @@ public class RewashLogMain extends AppCompatActivity {
 
     EmployeeDataAccess employeeDataAccess;
 
-    private String washType;
+    private String washType ="";
+    private String reason = "";
 
 
     @Override
@@ -80,10 +81,9 @@ public class RewashLogMain extends AppCompatActivity {
         timeEditText = (EditText) findViewById(R.id.timeEditText);
         dateEditText = (EditText) findViewById(R.id.dateEditText);
 
-        washPackageRadioGroup = (RadioGroup) findViewById(R.id.washPackageRadioGroup);
-        quickRadioButton = (RadioButton) findViewById(R.id.quickRadioButton);
-        fullRadioButton = (RadioButton) findViewById(R.id.fullRadioButton);
-        luxuryRadioButton = (RadioButton) findViewById(R.id.luxuryRadioButton);
+        quickButton = (Button) findViewById(R.id.quickButton);
+        fullButton = (Button) findViewById(R.id.fullButton);
+        luxuryButton = (Button) findViewById(R.id.luxuryButton);
 
         notCleanCheckbox = (CheckBox) findViewById(R.id.notCleanCheckbox);
         noSoapCheckbox = (CheckBox) findViewById(R.id.noSoapCheckbox);
@@ -122,7 +122,7 @@ public class RewashLogMain extends AppCompatActivity {
                 //anyone.
                 if(s.length() > 0 && employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
                     loadNameTimeDate(s);
-                    setWashPackage();
+                    loadWashPackageOptions();
 
 
                 } else {
@@ -135,23 +135,11 @@ public class RewashLogMain extends AppCompatActivity {
         });
     }
 
-    private void setWashPackage() {
+    private void loadWashPackageOptions() {
+        fullButton.setBackgroundResource(android.R.drawable.btn_default);
+        quickButton.setBackgroundResource(android.R.drawable.btn_default);
+        luxuryButton.setBackgroundResource(android.R.drawable.btn_default);
         washPackageLinearLayout.setVisibility(View.VISIBLE);
-        washPackageRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if(washPackageRadioGroup.getCheckedRadioButtonId() == fullRadioButton.getId()){
-                    washType = "Full";
-                }
-                else if (washPackageRadioGroup.getCheckedRadioButtonId() == luxuryRadioButton.getId()){
-                    washType = " Luxury";
-                }
-                else {
-                    washType = "Quick";
-                }
-            }
-        });
-
     }
 
 
@@ -183,7 +171,27 @@ public class RewashLogMain extends AppCompatActivity {
         dateLinearLayout.setVisibility(View.INVISIBLE);
         washPackageLinearLayout.setVisibility(View.INVISIBLE);
         reasonLinearLayout.setVisibility(View.INVISIBLE);
-        instructionsLinearLayout.setVisibility(View.INVISIBLE);
+        instructionsLinearLayout.setVisibility(View.GONE);
     }
 
+    public void washTypeButtonOnClick(View view) {
+        loadWashPackageOptions();
+        Button button = (Button) view;
+        washType = button.getText().toString();
+        button.setBackgroundColor(Color.parseColor("Green"));
+        reasonLinearLayout.setVisibility(View.VISIBLE);
+        saveButton.setVisibility(View.VISIBLE);
+        mainScrollView.scrollTo(0,10000);
+
+    }
+
+
+    public void saveButtonOnClick(View view) {
+        if(notCleanCheckbox.isChecked()){
+            reason += "not clean.";
+        }
+
+        if()
+
+    }
 }
