@@ -8,11 +8,8 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -39,13 +36,13 @@ public class RewashLogMain extends AppCompatActivity {
     private Button fullButton;
     private Button luxuryButton;
 
-    private CheckBox notCleanCheckbox;
-    private CheckBox noSoapCheckbox;
-    private CheckBox leftOverSoapCheckbox;
-    private CheckBox notDryCheckbox;
-    private CheckBox expiredCodeCheckbox;
-    private CheckBox customerSatisfactionCheckbox;
-    private CheckBox testWashCheckbox;
+    private Button notCleanButton;
+    private Button noSoapButton;
+    private Button leftOverButton;
+    private Button notDryButton;
+    private Button expiredCodeButton;
+    private Button customerSatisfactionButton;
+    private Button testWashButton;
 
     private Button saveButton;
     private Button instructionsOkButton;
@@ -54,6 +51,9 @@ public class RewashLogMain extends AppCompatActivity {
 
     private String washType ="";
     private String reason = "";
+    private String name = "";
+    private String time = "";
+    private String date = "";
 
 
     @Override
@@ -63,8 +63,8 @@ public class RewashLogMain extends AppCompatActivity {
 
         employeeDataAccess = new EmployeeDataAccess(this);
 
-//        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
-//        employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
+        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
+        employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
 
         mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
 
@@ -85,13 +85,13 @@ public class RewashLogMain extends AppCompatActivity {
         fullButton = (Button) findViewById(R.id.fullButton);
         luxuryButton = (Button) findViewById(R.id.luxuryButton);
 
-        notCleanCheckbox = (CheckBox) findViewById(R.id.notCleanCheckbox);
-        noSoapCheckbox = (CheckBox) findViewById(R.id.noSoapCheckbox);
-        leftOverSoapCheckbox = (CheckBox) findViewById(R.id.leftOverSoapCheckbox);
-        notDryCheckbox = (CheckBox) findViewById(R.id.notDryCheckbox);
-        expiredCodeCheckbox = (CheckBox) findViewById(R.id.expiredCodeCheckbox);
-        customerSatisfactionCheckbox = (CheckBox) findViewById(R.id.customerSatisfactionCheckbox);
-        testWashCheckbox = (CheckBox) findViewById(R.id.testWashCheckbox);
+        notCleanButton = (Button) findViewById(R.id.notCleanCheckbox);
+        noSoapButton = (Button) findViewById(R.id.noSoapCheckbox);
+        leftOverButton = (Button) findViewById(R.id.leftOverSoapCheckbox);
+        notDryButton = (Button) findViewById(R.id.notDryCheckbox);
+        expiredCodeButton = (Button) findViewById(R.id.expiredCodeCheckbox);
+        customerSatisfactionButton = (Button) findViewById(R.id.customerSatisfactionCheckbox);
+        testWashButton = (Button) findViewById(R.id.testWashCheckbox);
 
         saveButton = (Button) findViewById(R.id.saveButton);
         instructionsOkButton = (Button) findViewById(R.id.instructionsOkButton);
@@ -129,7 +129,7 @@ public class RewashLogMain extends AppCompatActivity {
                     hideAllLayouts();
                 }
 
-                }
+            }
 
 
         });
@@ -150,9 +150,9 @@ public class RewashLogMain extends AppCompatActivity {
     private void loadNameTimeDate(Editable s) {
         Calendar calender = Calendar.getInstance();
 
-        String name = employeeDataAccess.getEmployeeName(Integer.parseInt(s.toString()));
-        String time = calender.getTime().toString().substring(11,16);
-        String date = calender.getTime().toString().substring(0, 11);
+        name = employeeDataAccess.getEmployeeName(Integer.parseInt(s.toString()));
+        time = calender.getTime().toString().substring(11,16);
+        date = calender.getTime().toString().substring(0, 11);
         employeeNameEditText.setText(name);
         timeEditText.setText(time);
         dateEditText.setText(date);
@@ -171,6 +171,7 @@ public class RewashLogMain extends AppCompatActivity {
         dateLinearLayout.setVisibility(View.INVISIBLE);
         washPackageLinearLayout.setVisibility(View.INVISIBLE);
         reasonLinearLayout.setVisibility(View.INVISIBLE);
+        saveButton.setVisibility(View.INVISIBLE);
         instructionsLinearLayout.setVisibility(View.GONE);
     }
 
@@ -179,19 +180,34 @@ public class RewashLogMain extends AppCompatActivity {
         Button button = (Button) view;
         washType = button.getText().toString();
         button.setBackgroundColor(Color.parseColor("Green"));
+        clearReasons();
         reasonLinearLayout.setVisibility(View.VISIBLE);
-        saveButton.setVisibility(View.VISIBLE);
         mainScrollView.scrollTo(0,10000);
 
     }
 
+    public void reasonButtonOnClick(View view){
+        clearReasons();
+        Button button = (Button) view;
+        reason = button.getText().toString();
+        button.setBackgroundColor(Color.parseColor("Green"));
+        saveButton.setVisibility(View.VISIBLE);
+
+    }
+
+    private void clearReasons() {
+        notCleanButton.setBackgroundResource(android.R.drawable.btn_default);
+        noSoapButton.setBackgroundResource(android.R.drawable.btn_default);
+        leftOverButton.setBackgroundResource(android.R.drawable.btn_default);
+        notDryButton.setBackgroundResource(android.R.drawable.btn_default);
+        expiredCodeButton.setBackgroundResource(android.R.drawable.btn_default);
+        customerSatisfactionButton.setBackgroundResource(android.R.drawable.btn_default);
+        testWashButton.setBackgroundResource(android.R.drawable.btn_default);
+    }
+
 
     public void saveButtonOnClick(View view) {
-        if(notCleanCheckbox.isChecked()){
-            reason += "not clean.";
-        }
 
-        if()
 
     }
 }

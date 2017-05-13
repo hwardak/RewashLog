@@ -44,6 +44,7 @@ public class EmployeeDataAccess {
             values.put(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_ID, String.valueOf(i));
             values.put(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME, s);
             database.insert(RewashLogDBOpenHelper.TABLE_EMPLOYEES, null, values);
+            this.close();
             Log.d(LOGTAG, "Employee " + i + " added");
         } else {
             Log.d(LOGTAG, "Employee " + i + " Exists already");
@@ -55,6 +56,8 @@ public class EmployeeDataAccess {
 
         Cursor cursor =
                 database.rawQuery("SELECT 1 FROM " + RewashLogDBOpenHelper.TABLE_EMPLOYEES + " WHERE _id= \"" + employeeId + " \" LIMIT 1", null);
+
+        this.close();
 
         Log.d(LOGTAG, "Returned " + cursor.getCount() + " rows");
 
