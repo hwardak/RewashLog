@@ -15,6 +15,8 @@ import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 public class RewashLogMain extends AppCompatActivity {
 
     ScrollView mainScrollView;
@@ -50,6 +52,7 @@ public class RewashLogMain extends AppCompatActivity {
 
     EmployeeDataAccess employeeDataAccess;
 
+    private String washType;
 
 
     @Override
@@ -119,6 +122,11 @@ public class RewashLogMain extends AppCompatActivity {
                 //anyone.
                 if(s.length() > 0 && employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
                     loadNameTimeDate(s);
+                    setWashPackage();
+
+
+                } else {
+                    hideAllLayouts();
                 }
 
                 }
@@ -127,13 +135,40 @@ public class RewashLogMain extends AppCompatActivity {
         });
     }
 
+    private void setWashPackage() {
+        washPackageLinearLayout.setVisibility(View.VISIBLE);
+        washPackageRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(washPackageRadioGroup.getCheckedRadioButtonId() == fullRadioButton.getId()){
+                    washType = "Full";
+                }
+                else if (washPackageRadioGroup.getCheckedRadioButtonId() == luxuryRadioButton.getId()){
+                    washType = " Luxury";
+                }
+                else {
+                    washType = "Quick";
+                }
+            }
+        });
+
+    }
+
+
     /*
        Retrieves the name employee name, current date and time, sets the Views to visible, and
        fill the form three fields with the oppropriate info.
      */
     private void loadNameTimeDate(Editable s) {
+        Calendar calender = Calendar.getInstance();
+
+        String name = employeeDataAccess.getEmployeeName(Integer.parseInt(s.toString()));
+        String time = calender.getTime().toString().substring(11,16);
+        String date = calender.getTime().toString().substring(0, 11);
+        employeeNameEditText.setText(name);
+        timeEditText.setText(time);
+        dateEditText.setText(date);
         nameLinearLayout.setVisibility(View.VISIBLE);
-        employeeNameEditText.setText(employeeDataAccess.getEmployeeName(Integer.parseInt(s.toString())));
         timeLinearLayout.setVisibility(View.VISIBLE);
         dateLinearLayout.setVisibility(View.VISIBLE);
 
