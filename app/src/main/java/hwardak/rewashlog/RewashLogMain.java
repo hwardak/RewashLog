@@ -1,5 +1,6 @@
 package hwardak.rewashlog;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -98,12 +99,15 @@ public class RewashLogMain extends AppCompatActivity {
         saveButton = (Button) findViewById(R.id.saveButton);
         instructionsOkButton = (Button) findViewById(R.id.instructionsOkButton);
 
-        hideAllLayouts();
 
+        hideAllLayouts();
         applyTextChangeListener();
     }
 
     private void applyTextChangeListener() {
+
+        final Intent intent = new Intent(this, ManagerOptions.class);
+
         employeeIdEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -122,6 +126,8 @@ public class RewashLogMain extends AppCompatActivity {
                 Log.i("afterTextChangeEF:", s.toString());
                 // Create methods in the dataAccess class to check if this employeeId belongs to
                 //anyone.
+
+
                 if(s.length() > 0 && employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
                     loadNameTimeDate(s);
                     loadWashPackageOptions();
@@ -131,6 +137,9 @@ public class RewashLogMain extends AppCompatActivity {
                     hideAllLayouts();
                 }
 
+                if(s.length() > 0 && Integer.parseInt(s.toString()) == 999){
+                    startActivity(intent);
+                }
             }
 
 
