@@ -70,17 +70,16 @@ public class RewashDataAccess {
 //                rewashRow += " | ";
 
                 rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_NAME));
-                rewashRow += " | ";
+                rewashRow += " - ";
 
                 rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_TIME));
-                rewashRow += " | ";
+                rewashRow += " - ";
 
                 rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DATE));
-                rewashRow += " | ";
 
                 rewashRow += " \n";
                 rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_WASH_PACKAGE));
-                rewashRow += " | ";
+                rewashRow += " : ";
 
                 rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
 

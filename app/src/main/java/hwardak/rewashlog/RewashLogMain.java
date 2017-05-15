@@ -129,7 +129,8 @@ public class RewashLogMain extends AppCompatActivity {
 
 
                 if(s.length() > 0 && employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
-                    loadNameTimeDate(s);
+                    loadEmployeeName(s);
+                    loadTimeDate(s);
                     loadWashPackageOptions();
 
 
@@ -146,6 +147,9 @@ public class RewashLogMain extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets default background colors for wash type buttons, and their layout visible.
+     */
     private void loadWashPackageOptions() {
         fullButton.setBackgroundResource(android.R.drawable.btn_default);
         quickButton.setBackgroundResource(android.R.drawable.btn_default);
@@ -153,28 +157,35 @@ public class RewashLogMain extends AppCompatActivity {
         washPackageLinearLayout.setVisibility(View.VISIBLE);
     }
 
-
-    /*
-       Retrieves the name employee name, current date and time, sets the Views to visible, and
-       fill the form three fields with the oppropriate info.
+    /**
+     * Using the employee id, his/her name will be retrieved, set, and its layout made visible.
+     * @param s
      */
-    private void loadNameTimeDate(Editable s) {
-        Calendar calender = Calendar.getInstance();
-
+    private void loadEmployeeName(Editable s){
         name = employeeDataAccess.getEmployeeName(Integer.parseInt(s.toString()));
+        employeeNameEditText.setText(name);
+        nameLinearLayout.setVisibility(View.VISIBLE);
+
+    }
+
+    /**
+     * Date and Time will also be
+     * @param s
+     */
+    private void loadTimeDate(Editable s) {
+        Calendar calender = Calendar.getInstance();
         time = calender.getTime().toString().substring(11,16);
         date = calender.getTime().toString().substring(0, 11);
-        employeeNameEditText.setText(name);
         timeEditText.setText(time);
         dateEditText.setText(date);
-        nameLinearLayout.setVisibility(View.VISIBLE);
         timeLinearLayout.setVisibility(View.VISIBLE);
         dateLinearLayout.setVisibility(View.VISIBLE);
 
     }
 
-    /*
-     * Sets the entire form to invisble, except the employee ID EditText.
+    /**
+     * Resets the entire form by setting all linear layouts to invisible, except the employee id
+     * EditText.
      */
     private void hideAllLayouts() {
         nameLinearLayout.setVisibility(View.INVISIBLE);
@@ -186,6 +197,11 @@ public class RewashLogMain extends AppCompatActivity {
         instructionsLinearLayout.setVisibility(View.GONE);
     }
 
+    /**
+     * Depending on which wash type button was clicked, its label will be read in as stored as the
+     * 'wash type.'
+     * @param view
+     */
     public void washTypeButtonOnClick(View view) {
         loadWashPackageOptions();
         Button button = (Button) view;
@@ -197,6 +213,11 @@ public class RewashLogMain extends AppCompatActivity {
 
     }
 
+    /**
+     * Depending on which reason button was clicked, its label will be read in as stored as the
+     * 'reason.'
+     * @param view
+     */
     public void reasonButtonOnClick(View view){
         clearReasons();
         Button button = (Button) view;
@@ -206,6 +227,9 @@ public class RewashLogMain extends AppCompatActivity {
 
     }
 
+    /**
+     * Clears the reason buttons, and string variable.
+     */
     private void clearReasons() {
         notCleanButton.setBackgroundResource(android.R.drawable.btn_default);
         noSoapButton.setBackgroundResource(android.R.drawable.btn_default);
@@ -214,11 +238,23 @@ public class RewashLogMain extends AppCompatActivity {
         expiredCodeButton.setBackgroundResource(android.R.drawable.btn_default);
         customerSatisfactionButton.setBackgroundResource(android.R.drawable.btn_default);
         testWashButton.setBackgroundResource(android.R.drawable.btn_default);
+        reason = "";
     }
 
-
+    /**
+     * Passes the five string values and passes them to rewashDataAccess for persistence handling.
+     * @param view
+     */
     public void saveButtonOnClick(View view) {
         rewashDataAccess.addRewashToTable(name, time, date, washType, reason);
 
+    }
+
+    /**
+     * Clears the employeeIdEditText, and prevents the app from exiting.
+     */
+    @Override
+    public void onBackPressed(){
+        employeeIdEditText.setText("");
     }
 }
