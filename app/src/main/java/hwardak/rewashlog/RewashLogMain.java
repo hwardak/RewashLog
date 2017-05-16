@@ -13,13 +13,28 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
+
+
 public class RewashLogMain extends AppCompatActivity {
 
+    /*
+     * Reference to main and only scroll view.
+     */
     ScrollView mainScrollView;
 
+    /*
+     * References to data access objects.
+     */
+    EmployeeDataAccess employeeDataAccess;
+    RewashDataAccess rewashDataAccess;
+
+    /*
+     * All Linear Layouts.
+     */
     private LinearLayout nameLinearLayout;
     private LinearLayout timeLinearLayout;
     private LinearLayout dateLinearLayout;
@@ -27,16 +42,24 @@ public class RewashLogMain extends AppCompatActivity {
     private LinearLayout reasonLinearLayout;
     private LinearLayout instructionsLinearLayout;
 
-    private TextView instructionsTextView;
+    /*
+     * All EditText fields.
+     */
     private EditText employeeIdEditText;
     private EditText employeeNameEditText;
     private EditText timeEditText;
     private EditText dateEditText;
 
+    /*
+     * All carwash type buttons.
+     */
     private Button quickButton;
     private Button fullButton;
     private Button luxuryButton;
 
+    /*
+     * All reason buttons.
+     */
     private Button notCleanButton;
     private Button noSoapButton;
     private Button leftOverButton;
@@ -45,12 +68,15 @@ public class RewashLogMain extends AppCompatActivity {
     private Button customerSatisfactionButton;
     private Button testWashButton;
 
+    /*
+     * Save button.
+     */
     private Button saveButton;
-    private Button instructionsOkButton;
 
-    EmployeeDataAccess employeeDataAccess;
-    RewashDataAccess rewashDataAccess;
 
+    /*
+     * Strings to hold and pass all rewash information.
+     */
     private String washType ="";
     private String reason = "";
     private String name = "";
@@ -58,18 +84,38 @@ public class RewashLogMain extends AppCompatActivity {
     private String date = "";
 
 
+    private Button instructionsOkButton;
+    private TextView instructionsTextView;
+
+    /**
+     * Calls to instantiate all references.
+     * Clears and hides all linear layouts, except employee id.
+     * Applies text change listener to employee id EditText.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rewash_log_main);
 
-        employeeDataAccess = new EmployeeDataAccess(this);
-        rewashDataAccess = new RewashDataAccess(this);
+
+        this.instantiateAllVariable();
+        this.hideAllLayouts();
+        this.applyTextChangeListener();
 
         employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
         employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
+    }
 
+
+    /**
+     * Instantiates all references.
+     */
+    private void instantiateAllVariable() {
         mainScrollView = (ScrollView) findViewById(R.id.mainScrollView);
+
+        employeeDataAccess = new EmployeeDataAccess(this);
+        rewashDataAccess = new RewashDataAccess(this);
 
         nameLinearLayout = (LinearLayout) findViewById(R.id.nameLinearLayout);
         timeLinearLayout = (LinearLayout) findViewById(R.id.timeLinearLayout);
@@ -99,9 +145,6 @@ public class RewashLogMain extends AppCompatActivity {
         saveButton = (Button) findViewById(R.id.saveButton);
         instructionsOkButton = (Button) findViewById(R.id.instructionsOkButton);
 
-
-        hideAllLayouts();
-        applyTextChangeListener();
     }
 
     /**
@@ -112,7 +155,9 @@ public class RewashLogMain extends AppCompatActivity {
      * id is given. 999 will start the ManagerOptions Activity.
      */
     private void applyTextChangeListener() {
-
+        /*
+         * Intent to start ManagerOptions activity provided the user enters a valid id.
+         */
         final Intent intent = new Intent(this, ManagerOptions.class);
 
         employeeIdEditText.addTextChangedListener(new TextWatcher() {
@@ -271,6 +316,8 @@ public class RewashLogMain extends AppCompatActivity {
      */
     public void saveButtonOnClick(View view) {
         rewashDataAccess.addRewashToTable(name, time, date, washType, reason);
+        employeeIdEditText.setText("");
+        // Should make toast here.
 
     }
 
