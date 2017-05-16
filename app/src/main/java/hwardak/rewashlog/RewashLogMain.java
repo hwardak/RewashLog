@@ -104,40 +104,64 @@ public class RewashLogMain extends AppCompatActivity {
         applyTextChangeListener();
     }
 
+    /**
+     * Text change listener on the Employee id EditText.
+     * As each character is entered, the SQLite database is queried to see if it that id belongs
+     * to any existing employees.
+     * Accessing additional Activities and options can also be achieved, provided the appropriate
+     * id is given. 999 will start the ManagerOptions Activity.
+     */
     private void applyTextChangeListener() {
 
         final Intent intent = new Intent(this, ManagerOptions.class);
 
         employeeIdEditText.addTextChangedListener(new TextWatcher() {
             @Override
+
+            /*
+             * Not in use.
+             */
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 Log.i("beforeTextChangeEF:", s.toString());
 
             }
 
+            /*
+             * Not in use.
+             */
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("onTextChangeEF:", s.toString());
 
             }
 
+            /*
+             * After a new char is added to the employee id EditText, this method is invoked.
+             */
             @Override
             public void afterTextChanged(Editable s) {
-                Log.i("afterTextChangeEF:", s.toString());
-                // Create methods in the dataAccess class to check if this employeeId belongs to
-                //anyone.
+            //    Log.i("afterTextChangeEF:", s.toString());
 
-
+                /*
+                 * If the employee exists, load his/her name, load current time and data, and
+                 * load wash package options/
+                 */
                 if(s.length() > 0 && employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
                     loadEmployeeName(s);
                     loadTimeDate(s);
                     loadWashPackageOptions();
 
-
+                    /*
+                     * Else, hide all linear layouts.
+                     */
                 } else {
                     hideAllLayouts();
                 }
 
+                /*
+                 * If the user enters 999 in the employee id EditText, it will start the manager
+                 * options activity.
+                 */
                 if(s.length() > 0 && Integer.parseInt(s.toString()) == 999){
                     startActivity(intent);
                 }
