@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -152,13 +151,13 @@ public class RewashLogMain extends AppCompatActivity {
      * As each character is entered, the SQLite database is queried to see if it that id belongs
      * to any existing employees.
      * Accessing additional Activities and options can also be achieved, provided the appropriate
-     * id is given. 999 will start the ManagerOptions Activity.
+     * id is given. 999 will start the RewashLogOptions Activity.
      */
     private void applyTextChangeListener() {
         /*
-         * Intent to start ManagerOptions activity provided the user enters a valid id.
+         * Intent to start RewashLogOptions activity provided the user enters a valid id.
          */
-        final Intent intent = new Intent(this, ManagerOptions.class);
+        final Intent intent = new Intent(this, RewashLogOptions.class);
 
         employeeIdEditText.addTextChangedListener(new TextWatcher() {
             @Override

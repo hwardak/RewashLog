@@ -4,8 +4,31 @@
     android:id="@+id/activity_manager_options"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hwardak.rewashlog.ManagerOptions"
+    tools:context="hwardak.rewashlog.RewashLogOptions"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Add/Delete User"
+            android:onClick="addDeleteUserButton"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="View Log"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ManagerOptions"></activity>
+        <activity android:name=".RewashLogOptions" />
+        <activity android:name=".EmployeeOptions"></activity>
     </application>
 
 </manifest>
