@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by HWardak on 2017-05-09.
  */
@@ -37,18 +39,20 @@ public class EmployeeDataAccess {
         dbHelper.close();
     }
 
-    public void addEmployeeToTable(int i, String s) {
-        this.open();
+    public boolean addEmployeeToTable(int i, String s) {
         if (!doesEmployeeExist(i)) {
+            this.open();
             ContentValues values = new ContentValues();
             values.put(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_ID, String.valueOf(i));
             values.put(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME, s);
             database.insert(RewashLogDBOpenHelper.TABLE_EMPLOYEES, null, values);
-            this.close();
             Log.d(LOGTAG, "Employee " + i + " added");
+            return true;
         } else {
             Log.d(LOGTAG, "Employee " + i + " Exists already");
         }
+        this.close();
+        return false;
     }
 
     public boolean doesEmployeeExist(int employeeId) {
@@ -81,5 +85,37 @@ public class EmployeeDataAccess {
             return cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME));
         }
         return null;
+    }
+
+    public ArrayList<String> getEmployeeList() {
+        this.open();
+        ArrayList<String> employeeList = new ArrayList<>();
+        String employeeRow = "";
+
+        Cursor cursor
+                = database.rawQuery("Select * from "
+                + RewashLogDBOpenHelper.TABLE_EMPLOYEES
+                + ";", null);
+
+        if (cursor.getCount() > 0) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                employeeRow = "";
+
+                employeeRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_ID));
+                employeeRow += " : ";
+                employeeRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME));
+
+                employeeList.add(employeeRow);
+            }
+        }
+        this.close();
+        return employeeList;
+    }
+
+    public void deleteEmployee(String substring) {
+        this.open();
+        database.delete(RewashLogDBOpenHelper.TABLE_EMPLOYEES, RewashLogDBOpenHelper.COLUMN_EMPLOYEE_ID + " = " + substring + ";", null);
+        this.close();
     }
 }

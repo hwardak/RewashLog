@@ -101,9 +101,9 @@ public class RewashLogMain extends AppCompatActivity {
         this.instantiateAllVariable();
         this.hideAllLayouts();
         this.applyTextChangeListener();
-
-        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
-        employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
+//
+//        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
+//        employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
     }
 
 
@@ -157,7 +157,8 @@ public class RewashLogMain extends AppCompatActivity {
         /*
          * Intent to start RewashLogOptions activity provided the user enters a valid id.
          */
-        final Intent intent = new Intent(this, RewashLogOptions.class);
+        final Intent rewashLogIntent = new Intent(this, RewashLogOptions.class);
+        final Intent employeeLogIntent = new Intent(this, EmployeeOptions.class);
 
         employeeIdEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -207,7 +208,11 @@ public class RewashLogMain extends AppCompatActivity {
                  * options activity.
                  */
                 if(s.length() > 0 && Integer.parseInt(s.toString()) == 999){
-                    startActivity(intent);
+                    startActivity(rewashLogIntent);
+                }
+
+                if(s.length() > 0 && Integer.parseInt(s.toString()) == 998){
+                    startActivity(employeeLogIntent);
                 }
             }
 
@@ -327,4 +332,12 @@ public class RewashLogMain extends AppCompatActivity {
     public void onBackPressed(){
         employeeIdEditText.setText("");
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        hideAllLayouts();
+        employeeIdEditText.setText("");
+    }
 }
+

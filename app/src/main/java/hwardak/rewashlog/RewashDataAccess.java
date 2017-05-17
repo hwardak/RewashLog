@@ -90,6 +90,5 @@ public class RewashDataAccess {
 
         }
             return rewashList;
-
     }
 }
