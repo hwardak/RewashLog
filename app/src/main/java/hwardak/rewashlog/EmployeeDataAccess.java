@@ -59,7 +59,7 @@ public class EmployeeDataAccess {
         this.open();
 
         Cursor cursor =
-                database.rawQuery("SELECT 1 FROM " + RewashLogDBOpenHelper.TABLE_EMPLOYEES + " WHERE _id= \"" + employeeId + " \" LIMIT 1", null);
+                database.rawQuery("SELECT 1 FROM " + RewashLogDBOpenHelper.TABLE_EMPLOYEES + " WHERE _id= \"" + employeeId + "\" LIMIT 1", null);
 
 
         Log.d(LOGTAG, "Returned " + cursor.getCount() + " rows");

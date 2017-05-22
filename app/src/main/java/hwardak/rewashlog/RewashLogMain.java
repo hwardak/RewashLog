@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import java.util.Calendar;
 
 
@@ -81,6 +80,9 @@ public class RewashLogMain extends AppCompatActivity {
     private String name = "";
     private String time = "";
     private String date = "";
+    private int year = 0;
+    private int month = 0;  // Jan = 0, dec = 11
+    private int dayOfMonth =0;
 
 
     private Button instructionsOkButton;
@@ -242,13 +244,16 @@ public class RewashLogMain extends AppCompatActivity {
     }
 
     /**
-     * Date and Time will also be
+     * Date and Time... !@#$%^
      * @param s
      */
     private void loadTimeDate(Editable s) {
-        Calendar calender = Calendar.getInstance();
-        time = calender.getTime().toString().substring(11,16);
-        date = calender.getTime().toString().substring(0, 11);
+        Calendar calendar = Calendar.getInstance();
+        time = calendar.getTime().toString().substring(11,16);
+        date = calendar.getTime().toString().substring(0, 11);
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH); // Jan = 0, dec = 11
+        dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         timeEditText.setText(time);
         dateEditText.setText(date);
         timeLinearLayout.setVisibility(View.VISIBLE);
@@ -319,7 +324,7 @@ public class RewashLogMain extends AppCompatActivity {
      * @param view
      */
     public void saveButtonOnClick(View view) {
-        rewashDataAccess.addRewashToTable(name, time, date, washType, reason);
+        rewashDataAccess.addRewashToTable(name, time, date, year, month, dayOfMonth, washType, reason);
         employeeIdEditText.setText("");
         // Should make toast here.
 

@@ -14,7 +14,7 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
 
     private static final String LOGTAG = "DATABASE: ";
     private static final String DATABASE_NAME ="rewashlog.db";
-    private static int DATABASE_VERSION = 1;
+    private static int DATABASE_VERSION = 5;
 
 
     public static final String TABLE_EMPLOYEES = "employees";
@@ -33,6 +33,9 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_DAY_OF_MONTH = "day";
+    public static final String COLUMN_MONTH = "month";
+    public static final String COLUMN_YEAR = "year";
     public static final String COLUMN_WASH_PACKAGE = "washPackage";
     public static final String COLUMN_REASON = "reason";
 
@@ -42,6 +45,9 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
             + COLUMN_NAME + " TEXT,"
             + COLUMN_TIME + " TEXT,"
             + COLUMN_DATE + " TEXT,"
+            + COLUMN_DAY_OF_MONTH + " INTEGER,"
+            + COLUMN_MONTH + " INTEGER,"
+            + COLUMN_YEAR + " INTEGER,"
             + COLUMN_WASH_PACKAGE + " TEXT,"
             + COLUMN_REASON + " TEXT"
             + ");";
@@ -62,5 +68,7 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMPLOYEES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_REWASHES);
+        this.onCreate(db);
     }
 }
