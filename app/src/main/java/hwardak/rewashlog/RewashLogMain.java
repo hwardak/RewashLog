@@ -106,6 +106,8 @@ public class RewashLogMain extends AppCompatActivity {
 //
 //        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
 //        employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
+
+
     }
 
 
@@ -187,7 +189,7 @@ public class RewashLogMain extends AppCompatActivity {
              */
             @Override
             public void afterTextChanged(Editable s) {
-            //    Log.i("afterTextChangeEF:", s.toString());
+                //    Log.i("afterTextChangeEF:", s.toString());
 
                 /*
                  * If the employee exists, load his/her name, load current time and data, and
@@ -216,6 +218,41 @@ public class RewashLogMain extends AppCompatActivity {
                 if(s.length() > 0 && Integer.parseInt(s.toString()) == 998){
                     startActivity(employeeLogIntent);
                 }
+
+//                if(s.length() > 0 && Integer.parseInt(s.toString()) == 997){
+//                    for(int i = 0; i <100; i++) {
+//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2015, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2015, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2015, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2015, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2016, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2016, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2016, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2016, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2016, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2014, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2014, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2014, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2014, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2014, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2013, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2013, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2013, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2013, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2013, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2013, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2012, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2012, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2012, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2012, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2012, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2012, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2012, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2012, 1, 14, "washtype", "reason");
+//                    }
+//                }
+
+
             }
 
 

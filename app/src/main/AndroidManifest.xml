@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RewashLogOptions" />
-        <activity android:name=".EmployeeOptions"></activity>
+        <activity android:name=".EmployeeOptions" />
+        <activity android:name=".SendMailTask" />
     </application>
 
 </manifest>

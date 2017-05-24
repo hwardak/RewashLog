@@ -90,9 +90,9 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (parent == monthSpinner) {
             if (position != 0) {
-                month = position - 1;
+                month = position;
             } else {
-                month = -1;
+                month = 0;
             }
 
         }
@@ -101,22 +101,22 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
             if (position != 0) {
                 year = Integer.parseInt(parent.getItemAtPosition(position).toString());
             } else {
-                year = -1;
+                year = 0;
             }
-
-            if(month >= 0 && year >= 0){
-                rewashList = rewashDataAccess.getRewashList(month, year);
-            } else if(month >= 0){
-                rewashList = rewashDataAccess.getRewashList(month);
-            } else if(year >= 0){
-                rewashList = rewashDataAccess.getRewashList(year);
+        }
+            if(month > 0 && year > 0){
+                rewashList = rewashDataAccess.getRewashListByMonthAndYear(month, year);
+            } else if(month > 0){
+                rewashList = rewashDataAccess.getRewashListByMonth(month);
+            } else if(year > 0){
+                rewashList = rewashDataAccess.getRewashListByYear(year);
             } else {
                 rewashList = getEntireRewashList();
             }
 
 
-//        updateListView();
-        }
+        updateListView();
+
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

@@ -63,11 +63,12 @@ public class EmployeeDataAccess {
 
 
         Log.d(LOGTAG, "Returned " + cursor.getCount() + " rows");
-        this.close();
 
         if (cursor.getCount() > 0) {
+            this.close();
             return true;
         } else {
+            this.close();
             return false;
         }
 
@@ -84,6 +85,7 @@ public class EmployeeDataAccess {
             cursor.moveToNext();
             return cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_EMPLOYEE_NAME));
         }
+        this.close();
         return null;
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * Created by HWardak on 2017-05-13.
  */
 
-public class RewashDataAccess {
+public class RewashDataAccess extends AsyncTask {
 
     private static final String LOGTAG = "DATABASE R:";
     SQLiteOpenHelper dbHelper;
@@ -86,28 +87,27 @@ public class RewashDataAccess {
 
                 rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
 
-//                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR)) + "x\n";
-//                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_MONTH)) + "x\n";
-//                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DAY_OF_MONTH)) + "x\n";
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR)) + "x\n";
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_MONTH)) + "x\n";
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DAY_OF_MONTH)) + "x\n";
 
 
                 rewashList.add(rewashRow);
 
-                this.close();
             }
 
         }
+        this.close();
         return rewashList;
     }
 
-    public ArrayList<String> getRewashList(int month, int year) {
+    public ArrayList<String> getRewashListByMonthAndYear(int month, int year) {
         this.open();
         ArrayList<String> rewashList = new ArrayList<>();
         String rewashRow = new String();
 
-        Cursor cursor = database.rawQuery("Select * from rewashes where "
-                + RewashLogDBOpenHelper.COLUMN_DATE + " like " + "%" + month
-                + "% And " + RewashLogDBOpenHelper.COLUMN_DATE + " like " + "%" + year +"%", null);
+        Cursor cursor = database.rawQuery("Select * from rewashes where month = '" + month + "' AND year = '" + year + "';"
+                , null);
 
         if (cursor.getCount() > 0) {
             for (int i = 0; i < cursor.getCount(); i++) {
@@ -131,12 +131,104 @@ public class RewashDataAccess {
 
                 rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
 
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR)) + "x\n";
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_MONTH)) + "x\n";
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DAY_OF_MONTH)) + "x\n";
+
+
                 rewashList.add(rewashRow);
 
-                this.close();
             }
 
         }
+        this.close();
+        return rewashList;
+    }
+
+    public ArrayList<String> getRewashListByYear(int year) {
+        this.open();
+        ArrayList<String> rewashList = new ArrayList<>();
+        String rewashRow;
+
+        Cursor cursor = database.rawQuery("Select * from rewashes where year = " + year + ";", null);
+
+
+        if (cursor.getCount() > 0) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                rewashRow = "";
+
+//                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REWASH_ID));
+//                rewashRow += " | ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_NAME));
+                rewashRow += " - ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_TIME));
+                rewashRow += " - ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DATE));
+
+                rewashRow += " \n";
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_WASH_PACKAGE));
+                rewashRow += " : ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
+
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR)) + "x\n";
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_MONTH)) + "x\n";
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DAY_OF_MONTH)) + "x\n";
+
+
+                rewashList.add(rewashRow);
+
+            }
+
+        }
+        this.close();
+        return rewashList;
+    }
+
+    public ArrayList<String> getRewashListByMonth(int month) {
+        this.open();
+        ArrayList<String> rewashList = new ArrayList<>();
+        String rewashRow;
+
+        Cursor cursor = database.rawQuery("Select * from rewashes where month = " + month + ";", null);
+
+        if (cursor.getCount() > 0) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                rewashRow = "";
+
+//                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REWASH_ID));
+//                rewashRow += " | ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_NAME));
+                rewashRow += " - ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_TIME));
+                rewashRow += " - ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DATE));
+
+                rewashRow += " \n";
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_WASH_PACKAGE));
+                rewashRow += " : ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
+
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR)) + "x\n";
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_MONTH)) + "x\n";
+                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DAY_OF_MONTH)) + "x\n";
+
+
+                rewashList.add(rewashRow);
+
+            }
+
+        }
+        this.close();
         return rewashList;
     }
 
@@ -144,53 +236,21 @@ public class RewashDataAccess {
         this.open();
         ArrayList<String> yearList = new ArrayList<>();
         String yearRow = "";
-        Cursor cursor = database.rawQuery("Select DISTINCT year from rewashes;", null);
+        Cursor cursor = database.rawQuery("Select DISTINCT year from rewashes order by year;", null);
 
         if (cursor.getCount() > 0) {
             for (int i = 0; i < cursor.getCount(); i++) {
                 cursor.moveToNext();
                 yearRow = "" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR));
+                yearList.add(yearRow);
             }
-            yearList.add(yearRow);
         }
-    return yearList;
+        this.close();
+        return yearList;
     }
 
-    public ArrayList<String> getRewashList(int monthOrYear) {
-        this.open();
-        ArrayList<String> rewashList = new ArrayList<>();
-        String rewashRow = new String();
-
-        Cursor cursor = database.rawQuery("Select * from rewashes where year = " + mon, null);
-
-        if (cursor.getCount() > 0) {
-            for (int i = 0; i < cursor.getCount(); i++) {
-                cursor.moveToNext();
-                rewashRow = "";
-
-//                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REWASH_ID));
-//                rewashRow += " | ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_NAME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_TIME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DATE));
-
-                rewashRow += " \n";
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_WASH_PACKAGE));
-                rewashRow += " : ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
-
-                rewashList.add(rewashRow);
-
-                this.close();
-            }
-
-        }
-        return rewashList;
+    @Override
+    protected Object doInBackground(Object[] params) {
+        return null;
     }
 }
