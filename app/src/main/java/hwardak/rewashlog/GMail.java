@@ -3,16 +3,24 @@ package hwardak.rewashlog;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 
 
@@ -22,6 +30,7 @@ public class GMail {
     final String smtpAuth = "true";
     final String starttls = "true";
     final String emailHost = "smtp.gmail.com";
+    final List<MimeBodyPart> attachments = new LinkedList<>();
 
 
     String fromEmail;
@@ -39,7 +48,7 @@ public class GMail {
     }
 
     public GMail(String fromEmail, String fromPassword,
-                 List<String> toEmailList, String emailSubject, String emailBody) {
+                 List<String> toEmailList, String emailSubject, String emailBody, List<String> attachmentFileNames) throws MessagingException {
         this.fromEmail = fromEmail;
         this.fromPassword = fromPassword;
         this.toEmailList = toEmailList;
@@ -51,6 +60,17 @@ public class GMail {
         emailProperties.put("mail.smtp.auth", smtpAuth);
         emailProperties.put("mail.smtp.starttls.enable", starttls);
         Log.i("GMail", "Mail server properties set.");
+
+        if (attachmentFileNames != null && !attachmentFileNames.isEmpty()) {
+            for (String filename : attachmentFileNames) {
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                DataSource source = new FileDataSource(filename);
+                messageBodyPart.setDataHandler(new DataHandler(source));
+                messageBodyPart.setFileName(filename);
+
+                attachments.add(messageBodyPart);
+            }
+        }
     }
 
     public MimeMessage createEmailMessage() throws AddressException,
@@ -67,7 +87,31 @@ public class GMail {
         }
 
         emailMessage.setSubject(emailSubject);
-        emailMessage.setContent(emailBody, "text/html");// for a html email
+
+        if (attachments.size() > 0) {
+            // Create the message part
+            BodyPart messageBodyPart = new MimeBodyPart();
+
+            // Now set the actual message
+            messageBodyPart.setContent(emailBody, "text/html");
+
+            // Create a multipart message
+            Multipart multipart = new MimeMultipart();
+
+            // Set text message part
+            multipart.addBodyPart(messageBodyPart);
+
+            // attachments
+            for (MimeBodyPart att : attachments) {
+                multipart.addBodyPart(att);
+            }
+
+            // Send the complete message parts
+            emailMessage.setContent(multipart);
+        } else {
+            emailMessage.setContent(emailBody, "text/html");// for a html email
+        }
+
         // emailMessage.setText(emailBody);// for a text email
         Log.i("GMail", "Email Message created.");
         return emailMessage;

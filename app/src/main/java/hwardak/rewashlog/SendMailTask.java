@@ -8,6 +8,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SendMailTask extends AsyncTask {
@@ -31,16 +33,30 @@ public class SendMailTask extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object... args) {
+        String senderEmail = "hwardak001@gmail.com"; // XXXXXXXXXX
+        String senderPassword = "Python1!"; // XXXXXXXXX
+        String subject = args[0].toString();
+        String body = args[1].toString();
+        List emailRecipients = new ArrayList();
+        emailRecipients.add("h.wardak@hotmail.com");
+
+        List<String> attachments = new LinkedList<>();
+
+        if (args.length > 2) {
+            attachments.add(args[2].toString());
+        }
+
         try {
             Log.i("SendMailTask", "About to instantiate GMail...");
             publishProgress("Processing input....");
 
             GMail gMail = new GMail(
-                    args[0].toString(),
-                    args[1].toString(),
-                    (List) args[2],
-                    args[3].toString(),
-                    args[4].toString());
+                    senderEmail,
+                    senderPassword,
+                    emailRecipients,
+                    subject,
+                    body,
+                    attachments);
 
             publishProgress("Preparing mail message....");
             gMail.createEmailMessage();

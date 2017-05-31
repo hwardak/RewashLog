@@ -14,7 +14,7 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
 
     private static final String LOGTAG = "DATABASE: ";
     private static final String DATABASE_NAME ="rewashlog.db";
-    private static int DATABASE_VERSION = 5;
+    private static int DATABASE_VERSION = 7;
 
 
     public static final String TABLE_EMPLOYEES = "employees";
