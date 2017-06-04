@@ -32,7 +32,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Name: "
-                android:textSize="30sp"
+                android:textSize="25sp"
                 />
 
             <EditText
@@ -42,7 +42,7 @@
                 android:text=""
                 android:enabled="false"
                 android:id="@+id/employeeNameEditText"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 />
 
         </LinearLayout>
@@ -57,7 +57,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Time: "
-                android:textSize="30sp"/>
+                android:textSize="25sp"/>
 
             <EditText
                 android:layout_width="0dp"
@@ -66,7 +66,7 @@
                 android:text=""
                 android:enabled="false"
                 android:id="@+id/timeEditText"
-                android:textSize="30sp"/>
+                android:textSize="25sp"/>
 
         </LinearLayout>
 
@@ -80,7 +80,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Date: "
-                android:textSize="30sp"/>
+                android:textSize="25sp"/>
 
             <EditText
                 android:layout_width="0dp"
@@ -89,7 +89,7 @@
                 android:text=""
                 android:enabled="false"
                 android:id="@+id/dateEditText"
-                android:textSize="30sp"/>
+                android:textSize="25sp"/>
 
         </LinearLayout>
 
@@ -104,42 +104,36 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Wash Package: "
-                android:textSize="30sp"/>
+                android:textSize="14sp"/>
+            <Button
+                android:id="@+id/quickButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Quick"
+                android:textSize="12sp"
+                android:onClick="washTypeButtonOnClick"/>
 
+            <Button
+                android:id="@+id/fullButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Full"
+                android:textSize="12sp"
+                android:onClick="washTypeButtonOnClick"/>
 
-
-                <Button
-                    android:id="@+id/quickButton"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Quick"
-                    android:textSize="30sp"
-                    android:onClick="washTypeButtonOnClick"/>
-
-                <Button
-                    android:id="@+id/fullButton"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Full"
-                    android:textSize="30sp"
-                    android:onClick="washTypeButtonOnClick"/>
-
-                <Button
-                    android:id="@+id/luxuryButton"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Luxury"
-                    android:textSize="30sp"
-                    android:onClick="washTypeButtonOnClick"/>
+            <Button
+                android:id="@+id/luxuryButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Luxury"
+                android:textSize="12sp"
+                android:onClick="washTypeButtonOnClick"/>
 
 
         </LinearLayout>
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -155,7 +149,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Reason: "
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:gravity="center_horizontal"
                     />
 
@@ -163,58 +157,57 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Not clean."
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:id="@+id/notCleanCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="No soap."
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:id="@+id/noSoapCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Left over soap."
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:id="@+id/leftOverSoapCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Did not dry properly."
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:id="@+id/notDryCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Expired code."
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:id="@+id/expiredCodeCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Customer satisfaction."
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:id="@+id/customerSatisfactionCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Test Wash."
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:id="@+id/testWashCheckbox"
                     android:onClick="reasonButtonOnClick"
                     />
-
-
-
             </LinearLayout>
 
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -228,7 +221,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Wash Code: "
-                android:textSize="30sp"/>
+                android:textSize="18sp"/>
 
             <EditText
                 android:layout_width="0dp"
@@ -236,7 +229,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:id="@+id/codeEditText"
-                android:textSize="30sp"
+                android:textSize="18sp"
                 android:layout_gravity="bottom"/>
 
         </LinearLayout>
@@ -245,14 +238,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingTop="15sp"
+            android:paddingTop="15dp"
             android:id="@+id/instructionsLinearLayout">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="match_parent"
                 android:minLines="3"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:text=" Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello"
                 android:id="@+id/instructionsTextView" />
 
@@ -260,8 +253,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:text="ok"
-                android:textSize="30sp"
+                android:text="Ok"
+                android:textSize="20sp"
                 android:id="@+id/instructionsOkButton" />
         </LinearLayout>
         <Button
@@ -273,7 +266,7 @@
             android:visibility="invisible"
             android:layout_gravity="center_horizontal"
             android:onClick="saveButtonOnClick"
-             />
+            />
 
     </LinearLayout>
 

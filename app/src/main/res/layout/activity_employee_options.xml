@@ -4,15 +4,12 @@
     android:id="@+id/activity_manager_options"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hwardak.rewashlog.EmployeeOptions"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
-        >
+        android:orientation="horizontal">
 
         <Button
             android:layout_width="0dp"
@@ -31,17 +28,15 @@
             android:id="@+id/deleteEmployeeButton"
             android:enabled="false"
             />
-
     </LinearLayout>
-
+<!-- android:visibility="gone" -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/employeeOptionsAddEmployeeLinearLayout"
-        android:visibility="gone"
-        >
 
+        >
         <EditText
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -51,7 +46,6 @@
             android:id="@+id/employeeOptionsIdEditText"
             android:lines="1"
             />
-
         <EditText
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -59,9 +53,7 @@
             android:inputType="text"
             android:hint="Enter Name..."
             android:id="@+id/employeeOptionsNameEditText"
-            android:maxLines="1"
-
-            />
+            android:maxLines="1"/>
     </LinearLayout>
 
     <TextView
@@ -70,21 +62,16 @@
         android:text="- Employees -"
         android:textSize="25sp"
         android:gravity="center_horizontal" />
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true"
         >
-
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/employeeListView"
             >
-
-
         </ListView>
 
 

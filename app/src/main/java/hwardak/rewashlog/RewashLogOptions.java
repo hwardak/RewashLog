@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,17 +41,29 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
 
     File file;
     FileOutputStream fos;
+    
+    TextView luxuryCountTextView;
+    TextView fullCountTextView;
+    TextView quickCountTextView;
+    TextView totalCountTextView;
+    
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rewashlog_options);
 
-
+        luxuryCountTextView = (TextView) findViewById(R.id.luxuryCountTextView);
+        fullCountTextView = (TextView) findViewById(R.id.fullCountTextView);
+        quickCountTextView = (TextView) findViewById(R.id.quickCountTextView);
+        totalCountTextView = (TextView) findViewById(R.id.totalCountTextView);
+        
         instantiateMonthSpinner();
         instantiateYearSpinner();
         getEntireRewashList();
         updateListView();
+
     }
 
     private void instantiateYearSpinner() {
@@ -86,6 +101,11 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
 
     }
 
+    private void updateCounts() {
+//        luxuryCountTextView.setText();
+
+    }
+
     public ArrayList<String> getEntireRewashList() {
         rewashList = rewashDataAccess.getRewashList();
         return rewashList;
@@ -94,7 +114,6 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
     public void getSpecifiedRewashList(String month, String year) {
 
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -126,8 +145,10 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
 
 
         updateListView();
+        updateCounts();
 
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -137,20 +158,18 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
     // Creates a file and invokes to send the file in an email.
     public void emailOutOnClick(View view) throws IOException {
 
-        createFile();
+        String filename = createFile();
 
-        List<String> attachmentList = new ArrayList<>();
-
-            new SendMailTask(this).execute("Subject", "Body");
-
+        new SendMailTask(this).execute("Subject", "Body",  filename);
     }
 
 
-    public void createFile() throws IOException {
+    public String createFile() throws IOException {
+        String filename = "myfile.txt";
 
         file = getFilesDir();
         String path = file.getAbsolutePath();
-        fos = openFileOutput("myfile.txt", MODE_PRIVATE);
+        fos = openFileOutput(filename, MODE_PRIVATE);
 
 
         String body = "Rewash List \n";
@@ -163,6 +182,7 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
         fos.write(body.getBytes());
         fos.close();
 
+        return path + "/" + filename;
     }
 
 }

@@ -60,174 +60,48 @@ public class RewashDataAccess extends AsyncTask {
 
     public ArrayList<String> getRewashList() {
         this.open();
-        ArrayList<String> rewashList = new ArrayList<>();
-        String rewashRow = new String();
-
-        Cursor cursor = database.rawQuery("Select * from rewashes;", null);
-
-        if (cursor.getCount() > 0) {
-            for (int i = 0; i < cursor.getCount(); i++) {
-                cursor.moveToNext();
-                rewashRow = "";
-
-//                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REWASH_ID));
-//                rewashRow += " | ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_NAME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_TIME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DATE));
-
-                rewashRow += " \n";
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_WASH_PACKAGE));
-                rewashRow += " : ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
-
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR)) + "x\n";
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_MONTH)) + "x\n";
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DAY_OF_MONTH)) + "x\n";
 
 
-                rewashList.add(rewashRow);
+        Cursor cursor = database.rawQuery("Select * from rewashes order by year desc;", null);
+        ArrayList<String> rewashList = populateRewashList(cursor);
 
-            }
-
-        }
         this.close();
         return rewashList;
     }
 
     public ArrayList<String> getRewashListByMonthAndYear(int month, int year) {
         this.open();
-        ArrayList<String> rewashList = new ArrayList<>();
         String rewashRow = new String();
 
         Cursor cursor = database.rawQuery("Select * from rewashes where month = '" + month + "' AND year = '" + year + "';"
                 , null);
 
-        if (cursor.getCount() > 0) {
-            for (int i = 0; i < cursor.getCount(); i++) {
-                cursor.moveToNext();
-                rewashRow = "";
-
-//                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REWASH_ID));
-//                rewashRow += " | ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_NAME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_TIME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DATE));
-
-                rewashRow += " \n";
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_WASH_PACKAGE));
-                rewashRow += " : ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
-
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR)) + "x\n";
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_MONTH)) + "x\n";
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DAY_OF_MONTH)) + "x\n";
-
-
-                rewashList.add(rewashRow);
-
-            }
-
-        }
+        ArrayList<String> rewashList = populateRewashList(cursor);
         this.close();
         return rewashList;
     }
 
     public ArrayList<String> getRewashListByYear(int year) {
         this.open();
-        ArrayList<String> rewashList = new ArrayList<>();
         String rewashRow;
 
         Cursor cursor = database.rawQuery("Select * from rewashes where year = " + year + ";", null);
 
-
-        if (cursor.getCount() > 0) {
-            for (int i = 0; i < cursor.getCount(); i++) {
-                cursor.moveToNext();
-                rewashRow = "";
-
-//                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REWASH_ID));
-//                rewashRow += " | ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_NAME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_TIME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DATE));
-
-                rewashRow += " \n";
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_WASH_PACKAGE));
-                rewashRow += " : ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
-
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR)) + "x\n";
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_MONTH)) + "x\n";
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DAY_OF_MONTH)) + "x\n";
+        ArrayList<String> rewashList = populateRewashList(cursor);
 
 
-                rewashList.add(rewashRow);
-
-            }
-
-        }
         this.close();
         return rewashList;
     }
 
     public ArrayList<String> getRewashListByMonth(int month) {
         this.open();
-        ArrayList<String> rewashList = new ArrayList<>();
         String rewashRow;
 
         Cursor cursor = database.rawQuery("Select * from rewashes where month = " + month + ";", null);
 
-        if (cursor.getCount() > 0) {
-            for (int i = 0; i < cursor.getCount(); i++) {
-                cursor.moveToNext();
-                rewashRow = "";
+        ArrayList<String> rewashList = populateRewashList(cursor);
 
-//                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REWASH_ID));
-//                rewashRow += " | ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_NAME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_TIME));
-                rewashRow += " - ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DATE));
-
-                rewashRow += " \n";
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_WASH_PACKAGE));
-                rewashRow += " : ";
-
-                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
-
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR)) + "x\n";
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_MONTH)) + "x\n";
-                rewashRow += "x" + cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DAY_OF_MONTH)) + "x\n";
-
-
-                rewashList.add(rewashRow);
-
-            }
-
-        }
         this.close();
         return rewashList;
     }
@@ -247,6 +121,43 @@ public class RewashDataAccess extends AsyncTask {
         }
         this.close();
         return yearList;
+    }
+
+    private ArrayList<String> populateRewashList(Cursor cursor){
+        String rewashRow;
+        ArrayList<String> rewashList = new ArrayList<>();
+
+        if (cursor.getCount() > 0) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                cursor.moveToNext();
+                rewashRow = "";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_NAME));
+                rewashRow += " - ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_TIME));
+                rewashRow += " - ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_DATE));
+
+                rewashRow += " ";
+
+                rewashRow += cursor.getInt(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_YEAR));
+
+                rewashRow += " \n";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_WASH_PACKAGE));
+
+                rewashRow += " : ";
+
+                rewashRow += cursor.getString(cursor.getColumnIndex(RewashLogDBOpenHelper.COLUMN_REASON));
+
+                rewashList.add(rewashRow);
+
+            }
+
+        }
+        return rewashList;
     }
 
     @Override

@@ -17,18 +17,17 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:text="Search by month/year: "
-            android:textSize="25sp"
-            />
+            android:layout_weight="2"
+            android:hint="Search by month/year: "
+            android:textSize="@dimen/generic_font_size" />
 
         <Spinner
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/rewashMonthSpinner"
-
+            tools:textSize="@dimen/generic_font_size"
             />
 
         <Spinner
@@ -36,6 +35,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/rewashYearSpinner"
+            tools:textSize="@dimen/generic_font_size"
             />
 
 
@@ -57,12 +57,14 @@
             android:onClick="emailOutOnClick"
             />
 
-        <Button
+        <EditText
+            android:id="@+id/emailRecipient"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="View Log"
-            />
+            android:layout_weight="1"
+            android:inputType="textEmailSubject|textWebEmailAddress"
+            android:text="Enter your email..."
+            android:textSize="@dimen/generic_font_size" />
     </LinearLayout>
 
     <LinearLayout
@@ -75,25 +77,25 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:paddingBottom="10sp"
 
             >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Luxury"
-                android:textSize="25sp"
-                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Luxury"
+                android:textSize="@dimen/generic_font_size" />
+
+            <TextView
+                android:id="@+id/luxuryCountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="25sp"
-                />
+                android:textSize="@dimen/generic_font_size" />
 
         </LinearLayout>
 
@@ -109,15 +111,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Full"
-                android:textSize="25sp"
+                android:textSize="@dimen/generic_font_size"
                 />
 
             <TextView
+                android:id="@+id/fullCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="25sp"
-                />
+                android:textSize="@dimen/generic_font_size" />
 
         </LinearLayout>
 
@@ -133,15 +135,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quick"
-                android:textSize="25sp"
+                android:textSize="@dimen/generic_font_size"
                 />
 
             <TextView
+                android:id="@+id/quickCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="25sp"
-                />
+                android:textSize="@dimen/generic_font_size" />
 
         </LinearLayout>
 
@@ -157,32 +159,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total"
-                android:textSize="25sp"
+                android:textSize="@dimen/generic_font_size"
                 />
 
             <TextView
+                android:id="@+id/totalCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="25sp"
-                />
+                android:textSize="@dimen/generic_font_size" />
 
         </LinearLayout>
 
 
     </LinearLayout>
 
-
-
-
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="- Rewashes -"
-        android:textSize="25sp"
+        android:textSize="@dimen/generic_font_size"
         android:gravity="center_horizontal" />
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -192,9 +189,9 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/rewashListView"
-            >
+            tools:ignore="NestedScrolling">
 
 
         </ListView>

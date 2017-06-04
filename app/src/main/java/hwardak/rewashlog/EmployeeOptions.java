@@ -147,12 +147,12 @@ public class EmployeeOptions extends AppCompatActivity {
 
     private boolean isNameIdValid() {
         if(employeeIdEditText.getText().toString().length() == 0){
-            employeeIdEditText.setBackgroundColor(Color.parseColor("#d9ffb3"));
+//            employeeIdEditText.setBackgroundColor(Color.parseColor("#d9ffb3"));
             return false;
         }
 
         if(employeeNameEditText.getText().toString().length() == 0){
-            employeeNameEditText.setBackgroundColor(Color.parseColor("#d9ffb3"));
+//            employeeNameEditText.setBackgroundColor(Color.parseColor("#d9ffb3"));
             return false;
         }
         return true;

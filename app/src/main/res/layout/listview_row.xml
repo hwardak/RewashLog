@@ -6,10 +6,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="@dimen/generic_font_size"
         android:id="@+id/listViewRow"
         />
-
-
-
 </LinearLayout>

@@ -1,5 +1,6 @@
 package hwardak.rewashlog;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -196,6 +198,8 @@ public class RewashLogMain extends AppCompatActivity {
                  * load wash package options/
                  */
                 if(s.length() > 0 && employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
+
+                    hideKeyboard();
                     loadEmployeeName(s);
                     loadTimeDate(s);
                     loadWashPackageOptions();
@@ -257,6 +261,15 @@ public class RewashLogMain extends AppCompatActivity {
 
 
         });
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
     }
 
     /**
