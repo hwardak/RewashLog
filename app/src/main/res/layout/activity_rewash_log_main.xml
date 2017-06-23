@@ -15,11 +15,50 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter employee id..."
+            android:hint="@string/test_string"
             android:textSize="30sp"
             android:inputType="number"
             android:gravity="center_vertical|center_horizontal"
             android:id="@+id/employeeIdEditText" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/activityOptionsLinearLayout">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="Employees"
+                android:textSize="@dimen/generic_font_size"
+                android:textColor="#fffb00"
+                android:onClick="employeesButtonOnClick"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Rewash Log"
+                android:textSize="@dimen/generic_font_size"
+                android:textColor="#00ff04"
+                android:onClick="RewashLogButtonOnClick"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="Settings"
+                android:textSize="@dimen/generic_font_size"
+                android:textColor="#ff0008"
+                android:onClick="SettingsButtonOnClick"
+                />
+
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -32,7 +71,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Name: "
-                android:textSize="30sp"
+                android:textSize="@dimen/generic_font_size"
                 />
 
             <EditText
@@ -42,7 +81,7 @@
                 android:text=""
                 android:enabled="false"
                 android:id="@+id/employeeNameEditText"
-                android:textSize="30sp"
+                android:textSize="@dimen/generic_font_size"
                 />
 
         </LinearLayout>
@@ -57,7 +96,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Time: "
-                android:textSize="30sp"/>
+                android:textSize="@dimen/generic_font_size"
+                />
 
             <EditText
                 android:layout_width="0dp"
@@ -66,7 +106,8 @@
                 android:text=""
                 android:enabled="false"
                 android:id="@+id/timeEditText"
-                android:textSize="30sp"/>
+                android:textSize="@dimen/generic_font_size"
+                />
 
         </LinearLayout>
 
@@ -80,7 +121,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Date: "
-                android:textSize="30sp"/>
+                android:textSize="@dimen/generic_font_size"
+                />
 
             <EditText
                 android:layout_width="0dp"
@@ -89,7 +131,8 @@
                 android:text=""
                 android:enabled="false"
                 android:id="@+id/dateEditText"
-                android:textSize="30sp"/>
+                android:textSize="@dimen/generic_font_size"
+                />
 
         </LinearLayout>
 
@@ -104,7 +147,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Wash Package: "
-                android:textSize="30sp"/>
+                android:textSize="@dimen/generic_font_size"
+                />
 
 
 
@@ -114,8 +158,9 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Quick"
-                    android:textSize="30sp"
-                    android:onClick="washTypeButtonOnClick"/>
+                    android:textSize="@dimen/generic_font_size"
+                    android:onClick="washTypeButtonOnClick"
+                    />
 
                 <Button
                     android:id="@+id/fullButton"
@@ -123,17 +168,19 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Full"
-                    android:textSize="30sp"
-                    android:onClick="washTypeButtonOnClick"/>
+                    android:textSize="@dimen/generic_font_size"
+                    android:onClick="washTypeButtonOnClick"
+                    />
 
-                <Button
-                    android:id="@+id/luxuryButton"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="Luxury"
-                    android:textSize="30sp"
-                    android:onClick="washTypeButtonOnClick"/>
+            <Button
+                android:id="@+id/luxuryButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="0dp"
+                android:onClick="washTypeButtonOnClick"
+                android:text="Luxury"
+                android:textSize="@dimen/generic_font_size" />
 
 
         </LinearLayout>
@@ -155,7 +202,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Reason: "
-                    android:textSize="30sp"
+                    android:textSize="@dimen/generic_font_size"
                     android:gravity="center_horizontal"
                     />
 
@@ -163,49 +210,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Not clean."
-                    android:textSize="30sp"
+                    android:textSize="@dimen/generic_font_size"
                     android:id="@+id/notCleanCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="No soap."
-                    android:textSize="30sp"
+                    android:textSize="@dimen/generic_font_size"
                     android:id="@+id/noSoapCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Left over soap."
-                    android:textSize="30sp"
+                    android:textSize="@dimen/generic_font_size"
                     android:id="@+id/leftOverSoapCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Did not dry properly."
-                    android:textSize="30sp"
+                    android:textSize="@dimen/generic_font_size"
                     android:id="@+id/notDryCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Expired code."
-                    android:textSize="30sp"
+                    android:textSize="@dimen/generic_font_size"
                     android:id="@+id/expiredCodeCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Customer satisfaction."
-                    android:textSize="30sp"
+                    android:textSize="@dimen/generic_font_size"
                     android:id="@+id/customerSatisfactionCheckbox"
                     android:onClick="reasonButtonOnClick"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Test Wash."
-                    android:textSize="30sp"
+                    android:textSize="@dimen/generic_font_size"
                     android:id="@+id/testWashCheckbox"
                     android:onClick="reasonButtonOnClick"
                     />
@@ -228,7 +275,8 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Wash Code: "
-                android:textSize="30sp"/>
+                android:textSize="@dimen/generic_font_size"
+                />
 
             <EditText
                 android:layout_width="0dp"
@@ -236,7 +284,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:id="@+id/codeEditText"
-                android:textSize="30sp"
+                android:textSize="@dimen/generic_font_size"
                 android:layout_gravity="bottom"/>
 
         </LinearLayout>
@@ -252,7 +300,7 @@
                 android:layout_weight="4"
                 android:layout_height="match_parent"
                 android:minLines="3"
-                android:textSize="30sp"
+                android:textSize="@dimen/generic_font_size"
                 android:text=" Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello"
                 android:id="@+id/instructionsTextView" />
 
@@ -261,14 +309,14 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="ok"
-                android:textSize="30sp"
+                android:textSize="@dimen/generic_font_size"
                 android:id="@+id/instructionsOkButton" />
         </LinearLayout>
         <Button
             android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:textSize="30sp"
+            android:textSize="@dimen/generic_font_size"
             android:id="@+id/saveButton"
             android:visibility="invisible"
             android:layout_gravity="center_horizontal"

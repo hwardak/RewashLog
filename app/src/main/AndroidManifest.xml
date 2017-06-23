@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hwardak.rewashlog">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,9 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RewashLogOptions" />
+        <activity
+            android:name=".RewashLogOptions"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".EmployeeOptions" />
         <activity android:name=".SendMailTask" />
+        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>

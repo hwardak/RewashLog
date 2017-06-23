@@ -21,6 +21,7 @@ import java.util.Calendar;
 
 public class RewashLogMain extends AppCompatActivity {
 
+
     /*
      * Reference to main and only scroll view.
      */
@@ -41,6 +42,7 @@ public class RewashLogMain extends AppCompatActivity {
     private LinearLayout washPackageLinearLayout;
     private LinearLayout reasonLinearLayout;
     private LinearLayout instructionsLinearLayout;
+    private LinearLayout activityOptionsLinearLayout;
 
     /*
      * All EditText fields.
@@ -103,7 +105,7 @@ public class RewashLogMain extends AppCompatActivity {
 
 
         this.instantiateAllVariable();
-        this.hideAllLayouts();
+        this.resetLayouts();
         this.applyTextChangeListener();
 //
 //        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
@@ -128,6 +130,7 @@ public class RewashLogMain extends AppCompatActivity {
         washPackageLinearLayout = (LinearLayout) findViewById(R.id.washPackageLinearLayout);
         reasonLinearLayout = (LinearLayout) findViewById(R.id.reasonLinearLayout);
         instructionsLinearLayout = (LinearLayout) findViewById(R.id.instructionsLinearLayout);
+        activityOptionsLinearLayout = (LinearLayout) findViewById(R.id.activityOptionsLinearLayout);
 
         instructionsTextView = (TextView) findViewById(R.id.instructionsTextView);
         employeeIdEditText = (EditText) findViewById(R.id.employeeIdEditText);
@@ -150,6 +153,7 @@ public class RewashLogMain extends AppCompatActivity {
         saveButton = (Button) findViewById(R.id.saveButton);
         instructionsOkButton = (Button) findViewById(R.id.instructionsOkButton);
 
+
     }
 
     /**
@@ -163,8 +167,6 @@ public class RewashLogMain extends AppCompatActivity {
         /*
          * Intent to start RewashLogOptions activity provided the user enters a valid id.
          */
-        final Intent rewashLogIntent = new Intent(this, RewashLogOptions.class);
-        final Intent employeeLogIntent = new Intent(this, EmployeeOptions.class);
 
         employeeIdEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -198,7 +200,7 @@ public class RewashLogMain extends AppCompatActivity {
                  * load wash package options/
                  */
                 if(s.length() > 0 && employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
-
+                    activityOptionsLinearLayout.setVisibility(View.GONE);
                     hideKeyboard();
                     loadEmployeeName(s);
                     loadTimeDate(s);
@@ -208,53 +210,42 @@ public class RewashLogMain extends AppCompatActivity {
                      * Else, hide all linear layouts.
                      */
                 } else {
-                    hideAllLayouts();
+                    resetLayouts();
                 }
 
-                /*
-                 * If the user enters 999 in the employee id EditText, it will start the manager
-                 * options activity.
-                 */
-                if(s.length() > 0 && Integer.parseInt(s.toString()) == 999){
-                    startActivity(rewashLogIntent);
-                }
 
-                if(s.length() > 0 && Integer.parseInt(s.toString()) == 998){
-                    startActivity(employeeLogIntent);
-                }
-
-                if(s.length() > 0 && Integer.parseInt(s.toString()) == 997){
-                    for(int i = 0; i <3; i++) {
-                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2015, 1, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2015, 1, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2015, 2, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2015, 3, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2016, 4, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2016, 4, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2016, 4, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2016, 4, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2016, 1, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2014, 1, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2014, 2, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2014, 2, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2014, 3, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2014, 4, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2013, 1, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2013, 1, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2013, 2, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2013, 2, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2013, 3, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2013, 3, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2012, 3, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2012, 1, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2012, 3, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2012, 3, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2012, 2, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2012, 2, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2012, 2, 14, "washtype", "reason");
-                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2012, 1, 14, "washtype", "reason");
-                    }
-                }
+//                if(s.length() > 0 && Integer.parseInt(s.toString()) == 997){
+//                    for(int i = 0; i <3; i++) {
+//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2015, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2015, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2015, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2015, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2016, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2016, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2016, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2016, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2016, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2014, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2014, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2014, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2014, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2014, 4, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2013, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2013, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2013, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2013, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2013, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2013, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2012, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2012, 1, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2012, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2012, 3, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2012, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2012, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2012, 2, 14, "washtype", "reason");
+//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2012, 1, 14, "washtype", "reason");
+//                    }
+//                }
 
 
             }
@@ -313,9 +304,9 @@ public class RewashLogMain extends AppCompatActivity {
 
     /**
      * Resets the entire form by setting all linear layouts to invisible, except the employee id
-     * EditText.
+     * EditText, and the activity options layout.
      */
-    private void hideAllLayouts() {
+    private void resetLayouts() {
         nameLinearLayout.setVisibility(View.INVISIBLE);
         timeLinearLayout.setVisibility(View.INVISIBLE);
         dateLinearLayout.setVisibility(View.INVISIBLE);
@@ -323,6 +314,7 @@ public class RewashLogMain extends AppCompatActivity {
         reasonLinearLayout.setVisibility(View.INVISIBLE);
         saveButton.setVisibility(View.INVISIBLE);
         instructionsLinearLayout.setVisibility(View.GONE);
+        activityOptionsLinearLayout.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -391,8 +383,26 @@ public class RewashLogMain extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        hideAllLayouts();
+        resetLayouts();
         employeeIdEditText.setText("");
+    }
+
+
+
+
+    public void employeesButtonOnClick(View view) {
+        final Intent employeeLogIntent = new Intent(this, EmployeeOptions.class);
+        startActivity(employeeLogIntent);
+    }
+
+    public void RewashLogButtonOnClick(View view) {
+        final Intent rewashLogIntent = new Intent(this, RewashLogOptions.class);
+        startActivity(rewashLogIntent);
+    }
+
+    public void SettingsButtonOnClick(View view) {
+        final Intent settingsIntent = new Intent(this, Settings.class);
+        startActivity(settingsIntent);
     }
 }
 

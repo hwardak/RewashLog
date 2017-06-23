@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,11 +19,11 @@ public class SendMailTask extends AsyncTask {
     private ProgressDialog statusDialog;
     private Activity sendMailActivity;
 
+
     public SendMailTask(Activity activity) {
         sendMailActivity = activity;
 
     }
-
 
     protected void onPreExecute() {
         statusDialog = new ProgressDialog(sendMailActivity);
@@ -38,7 +40,7 @@ public class SendMailTask extends AsyncTask {
         String subject = args[0].toString();
         String body = args[1].toString();
         List emailRecipients = new ArrayList();
-        emailRecipients.add("h.wardak@hotmail.com");
+        emailRecipients.add(args[3].toString());
 
         List<String> attachments = new LinkedList<>();
 
@@ -67,10 +69,10 @@ public class SendMailTask extends AsyncTask {
         } catch (Exception e) {
             publishProgress(e.getMessage());
             Log.e("SendMailTask", e.getMessage(), e);
-        }
-        return null;
-    }
 
+        }
+            return null;
+    }
     @Override
     public void onProgressUpdate(Object... values) {
         statusDialog.setMessage(values[0].toString());

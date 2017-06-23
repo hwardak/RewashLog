@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="hwardak.rewashlog.Settings">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textAlignment="center"
+            android:textSize="25sp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollHorizontally="false"
+            android:text="@string/settings_instructions"
+            android:textSize="@dimen/generic_font_size" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/generic_font_size"
+            android:hint="Your GMail address..."
+            android:id="@+id/userEmailEditText"
+            android:inputType="textEmailAddress"
+
+            android:text="hwardak001@gmail.com"
+            />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/generic_font_size"
+            android:hint="Your GMail password..."
+            android:id="@+id/userEmailPasswordEditText"
+            android:inputType="textPassword"
+
+            android:text="testPassword123"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/generic_font_size"
+            android:hint="Default recipient email address..."
+            android:id="@+id/recipientEmailEditText"
+            android:inputType="textEmailAddress"
+
+            android:text="h.wardak@hotmail.com"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/generic_font_size"
+            android:hint="Store number..."
+            android:id="@+id/storeNumberEditText"
+            android:inputType="number"
+
+            android:text="52655"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/generic_font_size"
+            android:textColor="#ff0004"
+            android:text=""
+            android:id="@+id/errorTextView"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:textSize="@dimen/generic_font_size"
+            android:onClick="saveButtonOnClick"
+            />
+
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

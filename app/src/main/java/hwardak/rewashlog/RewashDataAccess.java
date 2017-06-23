@@ -62,7 +62,7 @@ public class RewashDataAccess extends AsyncTask {
         this.open();
 
 
-        Cursor cursor = database.rawQuery("Select * from rewashes order by year desc;", null);
+        Cursor cursor = database.rawQuery("Select * from rewashes order by rewashID desc;", null);
         ArrayList<String> rewashList = populateRewashList(cursor);
 
         this.close();
@@ -73,7 +73,7 @@ public class RewashDataAccess extends AsyncTask {
         this.open();
         String rewashRow = new String();
 
-        Cursor cursor = database.rawQuery("Select * from rewashes where month = '" + month + "' AND year = '" + year + "';"
+        Cursor cursor = database.rawQuery("Select * from rewashes where month = '" + month + "' AND year = '" + year + "' order by rewashID desc;"
                 , null);
 
         ArrayList<String> rewashList = populateRewashList(cursor);
@@ -85,7 +85,7 @@ public class RewashDataAccess extends AsyncTask {
         this.open();
         String rewashRow;
 
-        Cursor cursor = database.rawQuery("Select * from rewashes where year = " + year + ";", null);
+        Cursor cursor = database.rawQuery("Select * from rewashes where year = " + year + "order by rewashID desc;", null);
 
         ArrayList<String> rewashList = populateRewashList(cursor);
 
@@ -98,7 +98,7 @@ public class RewashDataAccess extends AsyncTask {
         this.open();
         String rewashRow;
 
-        Cursor cursor = database.rawQuery("Select * from rewashes where month = " + month + ";", null);
+        Cursor cursor = database.rawQuery("Select * from rewashes where month = " + month + " order by rewashID desc;", null);
 
         ArrayList<String> rewashList = populateRewashList(cursor);
 
@@ -163,5 +163,34 @@ public class RewashDataAccess extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] params) {
         return null;
+    }
+
+    public int getWashTypeCount(String washType) {
+        this.open();
+        Cursor cursor = database.rawQuery("Select * from rewashes where washPackage ='" + washType+ "';", null);
+        return cursor.getCount();
+    }
+
+    public int getWashTypeCountByMonthAndYear(String washType, int month, int year) {
+        this.open();
+        Cursor cursor = database.rawQuery("Select * from rewashes where washPackage = '"+ washType + "' AND month = '" + month + "' AND year = '" + year + "';"
+                , null);
+        return cursor.getCount();
+    }
+
+
+    public int getWashTypeCountByMonth(String washType, int month) {
+        this.open();
+        Cursor cursor = database.rawQuery("Select * from rewashes where washPackage = '"+ washType + "' AND month = '" + month + "';"
+                , null);
+        return cursor.getCount();
+
+    }
+
+    public int getWashTypeCountByYear(String washType, int year) {
+        this.open();
+        Cursor cursor = database.rawQuery("Select * from rewashes where washPackage = '"+ washType + "' AND year = '" + year + "';"
+                , null);
+        return cursor.getCount();
     }
 }

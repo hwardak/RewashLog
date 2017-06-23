@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">RewashLog</string>
+
+    <string name="test_string">testString600</string>
     <string name="settings_instructions">In order to export your rewash reports, you will need a GMail account. That GMail account will be used to send your rewash reports to your recipient email of choice.</string>
+
+
+
     <string-array name="months_array">
         <item>All Months</item>
         <item>January</item>

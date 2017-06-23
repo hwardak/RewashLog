@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.Set;
+
 /**
  * Created by HWardak on 2017-05-08.
  */
@@ -14,7 +16,21 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
 
     private static final String LOGTAG = "DATABASE: ";
     private static final String DATABASE_NAME ="rewashlog.db";
-    private static int DATABASE_VERSION = 7;
+    private static int DATABASE_VERSION = 12;
+
+
+    static final String TABLE_SETTINGS = "settings";
+    public static final String COLUMN_USER_EMAIL = "userEmail";
+    public static final String COLUMN_EMAIL_PW = "emailPW";
+    public static final String COLUMN_RECIPIENT_EMAIL = "recipientEmail";
+    public static final String COLUMN_STORE_NUMBER = "storeNumber";
+
+    private static final String SETTINGS_TABLE_CREATE
+            = "CREATE TABLE " + TABLE_SETTINGS + " ("
+            + COLUMN_USER_EMAIL + " TEXT, "
+            + COLUMN_EMAIL_PW + " TEXT, "
+            + COLUMN_RECIPIENT_EMAIL + " TEXT, "
+            + COLUMN_STORE_NUMBER + " INTEGER);";
 
 
     public static final String TABLE_EMPLOYEES = "employees";
@@ -34,7 +50,7 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_DAY_OF_MONTH = "day";
-    public static final String COLUMN_MONTH = "month";
+    public static final String COLUMN_MONTH = "monthNumber";
     public static final String COLUMN_YEAR = "year";
     public static final String COLUMN_WASH_PACKAGE = "washPackage";
     public static final String COLUMN_REASON = "reason";
@@ -58,17 +74,24 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(SETTINGS_TABLE_CREATE);
+        Log.d(LOGTAG, "Settings Table created.");
+
         db.execSQL(EMPLOYEE_TABLE_CREATE);
         Log.d(LOGTAG, "Employee Table created.");
 
         db.execSQL(REWASH_TABLE_CREATE);
         Log.d(LOGTAG, "Rewash Table created.");
+
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMPLOYEES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_REWASHES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTINGS);
+
         this.onCreate(db);
     }
 }

@@ -2,6 +2,7 @@ package hwardak.rewashlog;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ public class EmployeeOptions extends AppCompatActivity {
     LinearLayout addEmployeeLayout;
     EditText employeeIdEditText;
     EditText employeeNameEditText;
+    int id;
+    String name;
 
 
     @Override
@@ -50,11 +53,11 @@ public class EmployeeOptions extends AppCompatActivity {
 
 
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id){
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 deleteEmployeeButton.setEnabled(true);
                 rowView = view;
                 ListViewPosition = position;
-                if(previouslySelectedView != null){
+                if (previouslySelectedView != null) {
                     previouslySelectedView.setBackgroundColor(0);
                     previouslySelectedView = view;
                 } else {
@@ -71,15 +74,17 @@ public class EmployeeOptions extends AppCompatActivity {
 
     }
 
-    public void onDeleteButtonClick(View view){
+    public void onDeleteButtonClick(View view) {
 
         new AlertDialog.Builder(this)
                 .setTitle("Delete User")
-                .setMessage("Confirm delete user \"" + employeeList.get(ListViewPosition).substring(6) + "\"" )
+                .setMessage("Confirm delete user \"" + employeeList.get(ListViewPosition).substring(0, employeeList.get(ListViewPosition).indexOf(" ")) + "\"")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        employeeDataAccess.deleteEmployee(employeeList.get(ListViewPosition).substring(0,3));
+                        //Retrives the user id, which is the from index 0 to the index of  " " (space).
+                        employeeDataAccess.deleteEmployee(employeeList.get(ListViewPosition)
+                                .substring(0, employeeList.get(ListViewPosition).indexOf(" ")));
 
                         rowView.setBackgroundColor(0);
                         ((BaseAdapter) listAdapter).notifyDataSetChanged();
@@ -103,7 +108,7 @@ public class EmployeeOptions extends AppCompatActivity {
 
     }
 
-    public void updateListView(){
+    private void updateListView() {
         employeeList = employeeDataAccess.getEmployeeList();
         listAdapter = new ArrayAdapter<>(this, R.layout.listview_row, R.id.listViewRow, employeeList);
         listView = (ListView) findViewById(R.id.employeeListView);
@@ -111,50 +116,56 @@ public class EmployeeOptions extends AppCompatActivity {
 
     }
 
-    public ArrayList<String> getEmployeeList(){
+    private ArrayList<String> getEmployeeList() {
         employeeList = employeeDataAccess.getEmployeeList();
         return employeeList;
     }
 
 
     public void addEmployeeButtonOnClick(View view) {
-        if(addEmployeeLayout.getVisibility() != View.VISIBLE){
-            addEmployeeLayout.setVisibility(View.VISIBLE);
-            employeeNameEditText.setBackgroundResource(android.R.drawable.edit_text);
-            employeeIdEditText.setBackgroundResource(android.R.drawable.edit_text);
-        }
-        if(addEmployeeLayout.getVisibility() == View.VISIBLE && isNameIdValid()){
-            int id = Integer.parseInt(employeeIdEditText.getText().toString());
-            String name = employeeNameEditText.getText().toString();
 
-            if(employeeDataAccess.addEmployeeToTable(id, name)){
+
+        if (validateIdAndName()) {
             employeeIdEditText.setText("");
-                employeeIdEditText.setHint("Enter Id...");
+            employeeIdEditText.setHint("Enter Id...");
             employeeNameEditText.setText("");
-            addEmployeeLayout.setVisibility(View.GONE);
+
+            //Reset hint color.
+            employeeIdEditText.setHintTextColor(Color.parseColor("#8FF742"));
+            employeeNameEditText.setHintTextColor(Color.parseColor("#8FF742"));
+
+            employeeDataAccess.addEmployeeToTable(id, name);
+
+            id = 0;
+            name = null;
 
             updateListView();
             ((BaseAdapter) listAdapter).notifyDataSetChanged();
-            } else {
-                employeeIdEditText.setBackgroundColor(Color.parseColor("#ffd480"));
-                employeeIdEditText.setText("");
-                employeeIdEditText.setHint("Choose another ID");
-            }
-
 
         }
     }
 
-    private boolean isNameIdValid() {
-        if(employeeIdEditText.getText().toString().length() == 0){
-//            employeeIdEditText.setBackgroundColor(Color.parseColor("#d9ffb3"));
+    private boolean validateIdAndName() {
+
+        if (employeeIdEditText.getText().toString().length() == 0) {
+            employeeIdEditText.setHintTextColor(Color.parseColor("RED"));
+            return false;
+        }
+        if (employeeNameEditText.getText().toString().length() == 0) {
+            employeeNameEditText.setHintTextColor(Color.parseColor("RED"));
             return false;
         }
 
-        if(employeeNameEditText.getText().toString().length() == 0){
-//            employeeNameEditText.setBackgroundColor(Color.parseColor("#d9ffb3"));
+        id = Integer.parseInt(employeeIdEditText.getText().toString());
+        name = employeeNameEditText.getText().toString();
+
+        if(employeeDataAccess.doesEmployeeExist(id)) {
+            employeeIdEditText.setText("");
+            employeeIdEditText.setHint("Choose another ID");
+            employeeIdEditText.setHintTextColor(Color.parseColor("RED"));
             return false;
         }
+
         return true;
     }
 }
