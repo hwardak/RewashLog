@@ -8,5 +8,6 @@ Replacement wash codes must be kept track of for two reasons; Firstly to monitor
 
 This application is to run on a location specific, dedicated Android device. 
 Users are to create their account via the Employees activity. Once their account is setup, they start logging rewashes. 
-The date and time of the rewash is automatically set.  
+Users can start the logging process by entering their user ID in the only EditText in the Main activity. 
+The date and time of the rewash is automatically set. They are then to select the wash-package being issued (low, mid, and high). Once the wash package is selected, the option to select a "Reason" for the rewash is made visible. Reasons include; "Not clean", "No soap", "Left over soap", "Did not dry properly", "Expired code", "Customer satisfaction", "Test wash", and "Administrative".
 
