@@ -10,6 +10,4 @@
         android:id="@+id/listViewRow"
         />
 
-
-
 </LinearLayout>

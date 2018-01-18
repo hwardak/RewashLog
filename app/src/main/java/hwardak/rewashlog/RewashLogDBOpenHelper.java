@@ -16,14 +16,14 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
 
     private static final String LOGTAG = "DATABASE: ";
     private static final String DATABASE_NAME ="rewashlog.db";
-    private static int DATABASE_VERSION = 12;
+    private static int DATABASE_VERSION = 15;
 
 
     static final String TABLE_SETTINGS = "settings";
-    public static final String COLUMN_USER_EMAIL = "userEmail";
-    public static final String COLUMN_EMAIL_PW = "emailPW";
-    public static final String COLUMN_RECIPIENT_EMAIL = "recipientEmail";
-    public static final String COLUMN_STORE_NUMBER = "storeNumber";
+    static final String COLUMN_USER_EMAIL = "userEmail";
+    static final String COLUMN_EMAIL_PW = "emailPW";
+    static final String COLUMN_RECIPIENT_EMAIL = "recipientEmail";
+    static final String COLUMN_STORE_NUMBER = "storeNumber";
 
     private static final String SETTINGS_TABLE_CREATE
             = "CREATE TABLE " + TABLE_SETTINGS + " ("
@@ -33,9 +33,9 @@ public  class RewashLogDBOpenHelper extends SQLiteOpenHelper{
             + COLUMN_STORE_NUMBER + " INTEGER);";
 
 
-    public static final String TABLE_EMPLOYEES = "employees";
-    public static final String COLUMN_EMPLOYEE_ID = "_id";
-    public static final String COLUMN_EMPLOYEE_NAME = "name";
+    static final String TABLE_EMPLOYEES = "employees";
+    static final String COLUMN_EMPLOYEE_ID = "_id";
+    static final String COLUMN_EMPLOYEE_NAME = "name";
 
     private static final String EMPLOYEE_TABLE_CREATE
             = "CREATE TABLE " + TABLE_EMPLOYEES + " ("

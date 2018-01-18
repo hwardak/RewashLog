@@ -21,6 +21,9 @@ public class AESHelper {
         return new String(result);
     }
 
+    /*
+    TODO: Should not be using SecureRandom, it may produce differing results across different devices.
+     */
     private static byte[] getRawKey(byte[] seed) throws Exception {
         KeyGenerator kgen = KeyGenerator.getInstance("AES");
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG","Crypto");

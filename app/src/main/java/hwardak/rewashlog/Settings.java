@@ -1,11 +1,14 @@
 package hwardak.rewashlog;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -16,15 +19,23 @@ public class Settings extends AppCompatActivity {
     EditText recipientEmailEditText;
     EditText userEmailPasswordEditText;
     EditText storeNumberEditText;
-    TextView errorTextView;
+
+    TextView infoMessageTextView;
 
     String userEmail;
     String recipientEmail;
     String userEmailPassword;
     int storeNumber;
 
-    Cryto cryto;
+    ArrayList settingsList;
 
+
+    Crypto cryto;
+
+    String encryptedUserEmail;
+    String encryptedPassword;
+
+    SettingsDataAccess settingsDataAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +46,42 @@ public class Settings extends AppCompatActivity {
         userEmailPasswordEditText = (EditText) findViewById(R.id.userEmailPasswordEditText);
         recipientEmailEditText = (EditText) findViewById(R.id.recipientEmailEditText);
         storeNumberEditText = (EditText) findViewById(R.id.storeNumberEditText);
-        errorTextView = (TextView) findViewById(R.id.errorTextView);
 
-        cryto = new Cryto();
+        infoMessageTextView = (TextView) findViewById(R.id.infoMessageTextView);
+        settingsDataAccess = new SettingsDataAccess(this);
+
+        cryto = new Crypto();
+
+
+        loadSettings();
 
     }
 
+    private void loadSettings() {
+        if(settingsDataAccess.isSettingAvailable()){
+            settingsList = settingsDataAccess.getSettings();
+            userEmailEditText.setText(cryto.decryption(settingsList.get(0).toString()));
+            recipientEmailEditText.setText(settingsList.get(2).toString());
+            storeNumberEditText.setText(settingsList.get(3).toString());
+
+            userEmailPasswordEditText.setHint("*************");
+        }
+
+    }
+
+
     public void saveButtonOnClick(View view) {
 
-        checkFields();
-        saveFieldValues();
-
+        if(checkFields()) {
+            encryptValues();
+            saveValues();
+        }
     }
 
 
     private boolean checkFields() {
         String errorMessage = "";
+        infoMessageTextView.setTextColor(Color.parseColor("RED"));
         boolean pass = true;
 
         if(!userEmailEditText.getText().toString().trim().equals("")) {
@@ -93,29 +124,37 @@ public class Settings extends AppCompatActivity {
         }
 
         if(!pass){
-            errorTextView.setText(errorMessage);
+            infoMessageTextView.setText(errorMessage);
         } else {
             errorMessage = "";
-            errorTextView.setText(errorMessage);
+            infoMessageTextView.setText(errorMessage);
         }
 
         return pass;
     }
 
-
-    private void saveFieldValues() {
-        Log.d("preEncryption", userEmailPassword);
-        String postEncryption = cryto.encryption(userEmailPassword);
-        Log.d("postEncryption", postEncryption);
-        String postDecryption = cryto.decryption(postEncryption);
-        Log.d("postDecryption", postDecryption);
+    private void encryptValues() {
+        encryptedUserEmail = cryto.encryption(userEmail);
+        encryptedPassword = cryto.encryption(userEmailPassword);
 
 
+//        Log.d("preEncryption password", userEmailPassword);
+//        Log.d("postEncryption password", encryptedPassword);
+//        Log.d("preEncryption userEmail", userEmail);
+//        Log.d("postEncr userEmail", encryptedUserEmail);
 
-
-
+        userEmail = null;
+        userEmailPassword = null;
 
     }
+
+
+    private void saveValues() {
+        settingsDataAccess.saveSettings(encryptedUserEmail, encryptedPassword, recipientEmail, storeNumber);
+        infoMessageTextView.setTextColor(Color.parseColor("GREEN"));
+        infoMessageTextView.setText("Settings saved succesfully!");
+    }
+
 
     private boolean isEmailAddressValid(String email) {
         boolean isValid = false;
@@ -127,6 +166,10 @@ public class Settings extends AppCompatActivity {
             Log.d("Invalid email: ", email);
         }
         return isValid;
+    }
+
+    public void cancelButtonOnClick(View view) {
+        super.onBackPressed();
     }
 
 /////////////////////////////

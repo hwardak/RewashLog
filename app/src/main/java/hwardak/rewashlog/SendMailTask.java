@@ -35,8 +35,8 @@ public class SendMailTask extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object... args) {
-        String senderEmail = "hwardak001@gmail.com"; // XXXXXXXXXX
-        String senderPassword = "Python1!"; // XXXXXXXXX
+        String senderEmail = args[4].toString(); // XXXXXXXXXX
+        String senderPassword = args[5].toString(); // XXXXXXXXX
         String subject = args[0].toString();
         String body = args[1].toString();
         List emailRecipients = new ArrayList();

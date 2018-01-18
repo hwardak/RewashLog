@@ -36,8 +36,8 @@
             android:id="@+id/userEmailEditText"
             android:inputType="textEmailAddress"
 
-            android:text="hwardak001@gmail.com"
             />
+            <!--android:text="hwardak001@gmail.com"-->
 
 
         <EditText
@@ -48,8 +48,8 @@
             android:id="@+id/userEmailPasswordEditText"
             android:inputType="textPassword"
 
-            android:text="testPassword123"
             />
+            <!--android:text="testPassword123"-->
 
         <EditText
             android:layout_width="match_parent"
@@ -59,8 +59,8 @@
             android:id="@+id/recipientEmailEditText"
             android:inputType="textEmailAddress"
 
-            android:text="h.wardak@hotmail.com"
             />
+            <!--android:text="h.wardak@hotmail.com"-->
 
         <EditText
             android:layout_width="match_parent"
@@ -70,17 +70,22 @@
             android:id="@+id/storeNumberEditText"
             android:inputType="number"
 
-            android:text="52655"
             />
+            <!--android:text="52655"-->
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/generic_font_size"
-            android:textColor="#ff0004"
             android:text=""
-            android:id="@+id/errorTextView"
+            android:id="@+id/infoMessageTextView"
             />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
 
         <Button
             android:layout_width="wrap_content"
@@ -89,8 +94,16 @@
             android:textSize="@dimen/generic_font_size"
             android:onClick="saveButtonOnClick"
             />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:textSize="@dimen/generic_font_size"
+        android:onClick="cancelButtonOnClick"
+        />
 
 
+</LinearLayout>
 
     </LinearLayout>
 

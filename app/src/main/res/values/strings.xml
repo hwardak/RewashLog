@@ -23,5 +23,8 @@
         <item>Last year</item>
     </string-array>
 
+    <string name="test_string">XXXXXXXX</string>
+
+    <string name="IdEditTextHint">Please enter your ID…</string>
 
 </resources>

@@ -2,7 +2,6 @@ package hwardak.rewashlog;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,10 +10,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+
 import java.util.Calendar;
 
 
@@ -47,33 +49,35 @@ public class RewashLogMain extends AppCompatActivity {
     /*
      * All EditText fields.
      */
-    private EditText employeeIdEditText;
-    private EditText employeeNameEditText;
+    private TextView employeeIdEditText;
+    private TextView employeeNameEditText;
     private EditText timeEditText;
     private EditText dateEditText;
 
     /*
      * All carwash type buttons.
      */
-    private Button quickButton;
-    private Button fullButton;
-    private Button luxuryButton;
+    private ToggleButton quickButton;
+    private ToggleButton fullButton;
+    private ToggleButton luxuryButton;
 
     /*
      * All reason buttons.
      */
-    private Button notCleanButton;
-    private Button noSoapButton;
-    private Button leftOverButton;
-    private Button notDryButton;
-    private Button expiredCodeButton;
-    private Button customerSatisfactionButton;
-    private Button testWashButton;
+    private ToggleButton notCleanButton;
+    private ToggleButton noSoapButton;
+    private ToggleButton leftOverButton;
+    private ToggleButton notDryButton;
+    private ToggleButton expiredCodeButton;
+    private ToggleButton customerSatisfactionButton;
+    private ToggleButton testWashButton;
+    private ToggleButton administrativeButton;
 
     /*
      * Save button.
      */
     private Button saveButton;
+
 
 
     /*
@@ -89,27 +93,21 @@ public class RewashLogMain extends AppCompatActivity {
     private int dayOfMonth =0;
 
 
-    private Button instructionsOkButton;
-    private TextView instructionsTextView;
 
     /**
      * Calls to instantiate all references.
      * Clears and hides all linear layouts, except employee id.
      * Applies text change listener to employee id EditText.
-     * @param savedInstanceState
+     * @param savedInstanceState Saved Instance State
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rewash_log_main);
 
-
         this.instantiateAllVariable();
         this.resetLayouts();
         this.applyTextChangeListener();
-//
-//        employeeDataAccess.addEmployeeToTable(111, "Hasib Wardak");
-//        employeeDataAccess.addEmployeeToTable(222, "Ronald Yu");
 
 
     }
@@ -132,26 +130,26 @@ public class RewashLogMain extends AppCompatActivity {
         instructionsLinearLayout = (LinearLayout) findViewById(R.id.instructionsLinearLayout);
         activityOptionsLinearLayout = (LinearLayout) findViewById(R.id.activityOptionsLinearLayout);
 
-        instructionsTextView = (TextView) findViewById(R.id.instructionsTextView);
-        employeeIdEditText = (EditText) findViewById(R.id.employeeIdEditText);
-        employeeNameEditText = (EditText) findViewById(R.id.employeeNameEditText);
+        employeeIdEditText = (TextView) findViewById(R.id.employeeIdEditText);
+        employeeNameEditText = (TextView) findViewById(R.id.employeeNameEditText);
         timeEditText = (EditText) findViewById(R.id.timeEditText);
         dateEditText = (EditText) findViewById(R.id.dateEditText);
 
-        quickButton = (Button) findViewById(R.id.quickButton);
-        fullButton = (Button) findViewById(R.id.fullButton);
-        luxuryButton = (Button) findViewById(R.id.luxuryButton);
+        quickButton = (ToggleButton) findViewById(R.id.quickButton);
+        fullButton = (ToggleButton) findViewById(R.id.fullButton);
+        luxuryButton = (ToggleButton) findViewById(R.id.luxuryButton);
 
-        notCleanButton = (Button) findViewById(R.id.notCleanCheckbox);
-        noSoapButton = (Button) findViewById(R.id.noSoapCheckbox);
-        leftOverButton = (Button) findViewById(R.id.leftOverSoapCheckbox);
-        notDryButton = (Button) findViewById(R.id.notDryCheckbox);
-        expiredCodeButton = (Button) findViewById(R.id.expiredCodeCheckbox);
-        customerSatisfactionButton = (Button) findViewById(R.id.customerSatisfactionCheckbox);
-        testWashButton = (Button) findViewById(R.id.testWashCheckbox);
+        notCleanButton = (ToggleButton) findViewById(R.id.notCleanCheckbox);
+        noSoapButton = (ToggleButton) findViewById(R.id.noSoapCheckbox);
+        leftOverButton = (ToggleButton) findViewById(R.id.leftOverSoapCheckbox);
+        notDryButton = (ToggleButton) findViewById(R.id.notDryCheckbox);
+        expiredCodeButton = (ToggleButton) findViewById(R.id.expiredCodeCheckbox);
+        customerSatisfactionButton = (ToggleButton) findViewById(R.id.customerSatisfactionCheckbox);
+        testWashButton = (ToggleButton) findViewById(R.id.testWashCheckbox);
+        administrativeButton = (ToggleButton) findViewById(R.id.administrativeCheckbox);
 
         saveButton = (Button) findViewById(R.id.saveButton);
-        instructionsOkButton = (Button) findViewById(R.id.instructionsOkButton);
+
 
 
     }
@@ -161,7 +159,6 @@ public class RewashLogMain extends AppCompatActivity {
      * As each character is entered, the SQLite database is queried to see if it that id belongs
      * to any existing employees.
      * Accessing additional Activities and options can also be achieved, provided the appropriate
-     * id is given. 999 will start the RewashLogOptions Activity.
      */
     private void applyTextChangeListener() {
         /*
@@ -192,66 +189,163 @@ public class RewashLogMain extends AppCompatActivity {
              * After a new char is added to the employee id EditText, this method is invoked.
              */
             @Override
-            public void afterTextChanged(Editable s) {
-                //    Log.i("afterTextChangeEF:", s.toString());
+            public void afterTextChanged(Editable userID) {
+                //    Log.i("afterTextChangeEF:", userID.toString());
 
                 /*
                  * If the employee exists, load his/her name, load current time and data, and
                  * load wash package options/
                  */
-                if(s.length() > 0 && employeeDataAccess.doesEmployeeExist(Integer.parseInt(s.toString()))){
-                    activityOptionsLinearLayout.setVisibility(View.GONE);
-                    hideKeyboard();
-                    loadEmployeeName(s);
-                    loadTimeDate(s);
-                    loadWashPackageOptions();
 
-                    /*
-                     * Else, hide all linear layouts.
-                     */
+                if(userID.length() > 0 ) {
+                    activityOptionsLinearLayout.setVisibility(View.GONE);
+
+                    if (employeeDataAccess.doesEmployeeExist(Integer.parseInt(userID.toString()))) {
+                        activityOptionsLinearLayout.setVisibility(View.GONE);
+                        hideKeyboard();
+                        getEmployeeName(userID);
+                        getTimeDate();
+                        setTimeDate();
+                        setWashTypeToggleButtonListeners();
+                        setReasonToggleButtonListeners();
+                        showWashTypeOptions();
+
+                    }
                 } else {
+                    /*
+                     * Reset the form.
+                     */
                     resetLayouts();
                 }
-
-
-//                if(s.length() > 0 && Integer.parseInt(s.toString()) == 997){
-//                    for(int i = 0; i <3; i++) {
-//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2015, 1, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2015, 1, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2015, 2, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2015, 3, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2016, 4, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2016, 4, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2016, 4, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2016, 4, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2016, 1, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2014, 1, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2014, 2, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2014, 2, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2014, 3, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2014, 4, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2013, 1, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2013, 1, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2013, 2, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2013, 2, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2013, 3, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2013, 3, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2012, 3, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Jim", "1200", "date", 2012, 1, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("joe", "1200", "date", 2012, 3, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("bob", "1200", "date", 2012, 3, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Tim", "1200", "date", 2012, 2, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Tom", "1200", "date", 2012, 2, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Bill", "1200", "date", 2012, 2, 14, "washtype", "reason");
-//                        rewashDataAccess.addRewashToTable("Jill", "1200", "date", 2012, 1, 14, "washtype", "reason");
-//                    }
-//                }
-
 
             }
 
 
         });
+    }
+
+    private void washTypeButtonToggled(CompoundButton toggleButton){
+        setCheckedWashTypeButtons(false);
+        toggleButton.setChecked(true);
+        washType = toggleButton.getText().toString();
+        reasonLinearLayout.setVisibility(View.VISIBLE);
+        Log.d("WashType B:", washType);
+
+    }
+
+    private void reasonButtonToggled(CompoundButton toggleButton){
+        setCheckedReasonButtons(false);
+        toggleButton.setChecked(true);
+        reason = toggleButton.getText().toString();
+        mainScrollView.scrollTo(0,10000);
+
+        saveButton.setVisibility(View.VISIBLE);
+        Log.d("Reason :", reason);
+    }
+
+
+    private void setReasonToggleButtonListeners() {
+
+        notCleanButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    reasonButtonToggled(buttonView);
+                }
+            }
+        });
+
+
+        noSoapButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    reasonButtonToggled(buttonView);
+                }
+            }
+        });
+
+
+        leftOverButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    reasonButtonToggled(buttonView);
+                }
+            }
+        });
+
+
+        notDryButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    reasonButtonToggled(buttonView);
+                }
+            }
+        });
+
+
+        expiredCodeButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    reasonButtonToggled(buttonView);
+                }
+            }
+        });
+
+        customerSatisfactionButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    reasonButtonToggled(buttonView);
+                }
+            }
+        });
+
+
+        testWashButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    reasonButtonToggled(buttonView);
+                }
+            }
+        });
+
+        administrativeButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    reasonButtonToggled(buttonView);
+                }
+            }
+        });
+    }
+
+    private void setWashTypeToggleButtonListeners() {
+
+        quickButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    washTypeButtonToggled(buttonView);
+                }
+            }
+        });
+
+
+        fullButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    washTypeButtonToggled(buttonView);
+                }
+            }
+        });
+
+
+        luxuryButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    washTypeButtonToggled(buttonView);
+                }
+            }
+        });
+
+
+
     }
 
     private void hideKeyboard() {
@@ -261,45 +355,51 @@ public class RewashLogMain extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
+
+    }
+
+
+    private void showKeyboard(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
     }
 
     /**
      * Sets default background colors for wash type buttons, and their layout visible.
      */
-    private void loadWashPackageOptions() {
-        fullButton.setBackgroundResource(android.R.drawable.btn_default);
-        quickButton.setBackgroundResource(android.R.drawable.btn_default);
-        luxuryButton.setBackgroundResource(android.R.drawable.btn_default);
+    private void showWashTypeOptions() {
         washPackageLinearLayout.setVisibility(View.VISIBLE);
     }
 
     /**
      * Using the employee id, his/her name will be retrieved, set, and its layout made visible.
-     * @param s
+     * @param userID an int representing the number enterted into the EditText.
      */
-    private void loadEmployeeName(Editable s){
-        name = employeeDataAccess.getEmployeeName(Integer.parseInt(s.toString()));
+    private void getEmployeeName(Editable userID){
+        name = employeeDataAccess.getEmployeeName(Integer.parseInt(userID.toString()));
         employeeNameEditText.setText(name);
         nameLinearLayout.setVisibility(View.VISIBLE);
 
     }
 
     /**
-     * Date and Time... !@#$%^
-     * @param s
+     * Date and Time...
+     *
      */
-    private void loadTimeDate(Editable s) {
+    private void getTimeDate() {
         Calendar calendar = Calendar.getInstance();
         time = calendar.getTime().toString().substring(11,16);
         date = calendar.getTime().toString().substring(0, 11);
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH); // Jan = 0, dec = 11
         dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    private void setTimeDate(){
         timeEditText.setText(time);
         dateEditText.setText(date);
         timeLinearLayout.setVisibility(View.VISIBLE);
         dateLinearLayout.setVisibility(View.VISIBLE);
-
     }
 
     /**
@@ -307,6 +407,7 @@ public class RewashLogMain extends AppCompatActivity {
      * EditText, and the activity options layout.
      */
     private void resetLayouts() {
+        setCheckedReasonButtons(false);
         nameLinearLayout.setVisibility(View.INVISIBLE);
         timeLinearLayout.setVisibility(View.INVISIBLE);
         dateLinearLayout.setVisibility(View.INVISIBLE);
@@ -317,59 +418,38 @@ public class RewashLogMain extends AppCompatActivity {
         activityOptionsLinearLayout.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Depending on which wash type button was clicked, its label will be read in as stored as the
-     * 'wash type.'
-     * @param view
-     */
-    public void washTypeButtonOnClick(View view) {
-        loadWashPackageOptions();
-        Button button = (Button) view;
-        washType = button.getText().toString();
-        button.setBackgroundColor(Color.parseColor("Green"));
-        clearReasons();
-        reasonLinearLayout.setVisibility(View.VISIBLE);
-        mainScrollView.scrollTo(0,10000);
-
+    private void setCheckedWashTypeButtons(boolean isChecked) {
+        quickButton.setChecked(isChecked);
+        fullButton.setChecked(isChecked);
+        luxuryButton.setChecked(isChecked);
     }
 
-    /**
-     * Depending on which reason button was clicked, its label will be read in as stored as the
-     * 'reason.'
-     * @param view
-     */
-    public void reasonButtonOnClick(View view){
-        clearReasons();
-        Button button = (Button) view;
-        reason = button.getText().toString();
-        button.setBackgroundColor(Color.parseColor("Green"));
-        saveButton.setVisibility(View.VISIBLE);
 
+    private void setCheckedReasonButtons(boolean isChecked) {
+        notCleanButton.setChecked(isChecked);
+        noSoapButton.setChecked(isChecked);
+        leftOverButton.setChecked(isChecked);
+        notDryButton.setChecked(isChecked);
+        expiredCodeButton.setChecked(isChecked);
+        customerSatisfactionButton.setChecked(isChecked);
+        testWashButton.setChecked(isChecked);
+        administrativeButton.setChecked(isChecked);
     }
 
-    /**
-     * Clears the reason buttons, and string variable.
-     */
-    private void clearReasons() {
-        notCleanButton.setBackgroundResource(android.R.drawable.btn_default);
-        noSoapButton.setBackgroundResource(android.R.drawable.btn_default);
-        leftOverButton.setBackgroundResource(android.R.drawable.btn_default);
-        notDryButton.setBackgroundResource(android.R.drawable.btn_default);
-        expiredCodeButton.setBackgroundResource(android.R.drawable.btn_default);
-        customerSatisfactionButton.setBackgroundResource(android.R.drawable.btn_default);
-        testWashButton.setBackgroundResource(android.R.drawable.btn_default);
-        reason = "";
-    }
+
 
     /**
      * Passes the five string values and passes them to rewashDataAccess for persistence handling.
-     * @param view
+     * @param view The save button.
      */
     public void saveButtonOnClick(View view) {
-        rewashDataAccess.addRewashToTable(name, time, date, year, month, dayOfMonth, washType, reason);
+        rewashDataAccess
+                .addRewashToTable(name, time, date, year, month, dayOfMonth, washType, reason);
+        setCheckedWashTypeButtons(false);
+        setCheckedReasonButtons(false);
         employeeIdEditText.setText("");
-        // Should make toast here.
-
+        Toaster.toastUp(this, "Rewash Saved Succesfully");
+        showKeyboard();
     }
 
     /**
@@ -384,9 +464,12 @@ public class RewashLogMain extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         resetLayouts();
+        setCheckedWashTypeButtons(false);
+        setCheckedReasonButtons(false);
+        washType = "";
+        reason = "";
         employeeIdEditText.setText("");
     }
-
 
 
 
@@ -405,4 +488,10 @@ public class RewashLogMain extends AppCompatActivity {
         startActivity(settingsIntent);
     }
 }
+
+/*
+TODO: The sets of toggle buttons should always have on enabled.
+
+TODO: Toggle buttons don't reset if the toggle(s) are ON and the back btn is clicked instead of save.
+ */
 

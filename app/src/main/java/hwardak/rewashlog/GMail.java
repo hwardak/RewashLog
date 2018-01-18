@@ -120,11 +120,17 @@ public class GMail {
     public void sendEmail() throws AddressException, MessagingException {
 
         Transport transport = mailSession.getTransport("smtp");
-        transport.connect(emailHost, fromEmail, fromPassword);
-        Log.i("GMail", "allrecipients: " + emailMessage.getAllRecipients());
-        transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
-        transport.close();
-        Log.i("GMail", "Email sent successfully.");
+        try {
+            transport.connect(emailHost, fromEmail, fromPassword);
+            Log.i("GMail", "allrecipients: " + emailMessage.getAllRecipients());
+            transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
+            transport.close();
+            Log.i("GMail", "Email sent successfully.");
+        } catch (Exception e){
+            Log.i("GMail", "Wrong password for sender email.");
+
+
+        }
     }
 
 }

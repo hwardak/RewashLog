@@ -28,8 +28,10 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
 
 
     EmployeeDataAccess employeeDataAccess = new EmployeeDataAccess(this);
-
+    SettingsDataAccess settingsDataAccess = new SettingsDataAccess(this);
     RewashDataAccess rewashDataAccess = new RewashDataAccess(this);
+
+    Crypto crypto;
 
     ListView listView;
     ListAdapter listAdapter;
@@ -68,6 +70,10 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
         quickCountTextView = (TextView) findViewById(R.id.quickCountTextView);
         totalCountTextView = (TextView) findViewById(R.id.totalCountTextView);
         emailRecipientEditText = (EditText) findViewById(R.id.emailRecipientEditText);
+
+        emailRecipientEditText.setHint(settingsDataAccess.getRecipientEmail());
+
+        crypto = new Crypto();
 
         instantiateMonthSpinner();
         instantiateYearSpinner();
@@ -219,19 +225,47 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
         }
 
 
+        String senderEmail = crypto.decryption(settingsDataAccess.getUserEmail());
+        String senderPassword = crypto.decryption(settingsDataAccess.getUserPw());
         String recipient;
 
-        if (emailRecipientEditText.getText() != null){
+
+
+        if (!emailRecipientEditText.getText().toString().equals("")) {
             recipient = emailRecipientEditText.getText().toString();
-
-            if(validateEmailAddress(recipient)){
-                new SendMailTask(this).execute(subject, "Body",  fileName, recipient);
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Invalid Email Address",
-                        Toast.LENGTH_LONG).show();
-            }
+        } else {
+            recipient = emailRecipientEditText.getHint().toString();
         }
+
+        Log.d("Invalid email: ", recipient);
+        boolean emailsVaild = true;
+
+        if(!validateEmailAddress(recipient)){
+            emailsVaild = false;
+            Toaster.toastUp(this, "Invalid Recipient Address " + recipient);
+
+        } else {
+
+        }
+
+        if(!validateEmailAddress(senderEmail)){
+            emailsVaild = false;
+            Toaster.toastUp(this, "Invalid Sender Address " + senderEmail);
+        } else {
+
+        }
+
+        if(emailsVaild){
+            try {
+                new SendMailTask(this).execute(subject, " ", fileName, recipient, senderEmail, senderPassword);
+            } catch (Exception e){
+                Toaster.toastUp(this, "Wrong password...");
+            }
+
+            }
+
+
+
 
     }
 
