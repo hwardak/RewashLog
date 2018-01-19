@@ -13,7 +13,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,7 +30,7 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
     SettingsDataAccess settingsDataAccess = new SettingsDataAccess(this);
     RewashDataAccess rewashDataAccess = new RewashDataAccess(this);
 
-    Crypto crypto;
+    Crypto enAndDecrypt;
 
     ListView listView;
     ListAdapter listAdapter;
@@ -73,7 +72,7 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
 
         emailRecipientEditText.setHint(settingsDataAccess.getRecipientEmail());
 
-        crypto = new Crypto();
+        enAndDecrypt = new Crypto();
 
         instantiateMonthSpinner();
         instantiateYearSpinner();
@@ -112,6 +111,9 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
     }
 
 
+    /**
+     *
+     */
     private void updateListView() {
         listAdapter = new ArrayAdapter<>(this, R.layout.listview_row, R.id.listViewRow, rewashList);
         listView = (ListView) findViewById(R.id.rewashListView);
@@ -119,13 +121,19 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
 
     }
 
-
+    /**
+     * Pull the entire rewash log.
+     * @return
+     */
     private ArrayList<String> getEntireRewashList() {
         rewashList = rewashDataAccess.getRewashList();
         return rewashList;
     }
 
 
+    /**
+     * Hide the keyboard when it is not needed.
+     */
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -135,6 +143,14 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
 
     }
 
+    /**
+     * Depending on the month and/or year select from their respective spinners, the rewash counts
+     * per wash type will be update and display in their appropriate TextViews.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         luxuryCount =0 ;
@@ -225,8 +241,8 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
         }
 
 
-        String senderEmail = crypto.decryption(settingsDataAccess.getUserEmail());
-        String senderPassword = crypto.decryption(settingsDataAccess.getUserPw());
+        String senderEmail = enAndDecrypt.decryption(settingsDataAccess.getUserEmail());
+        String senderPassword = enAndDecrypt.decryption(settingsDataAccess.getUserPw());
         String recipient;
 
 
@@ -261,12 +277,7 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
             } catch (Exception e){
                 Toaster.toastUp(this, "Wrong password...");
             }
-
-            }
-
-
-
-
+        }
     }
 
 
