@@ -22,14 +22,15 @@ import java.util.ArrayList;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+
+
+
 public class RewashLogOptions extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-
-
-    EmployeeDataAccess employeeDataAccess = new EmployeeDataAccess(this);
-    SettingsDataAccess settingsDataAccess = new SettingsDataAccess(this);
-    RewashDataAccess rewashDataAccess = new RewashDataAccess(this);
-
+    //Class references
+    EmployeeDataAccess employeeDataAccess;
+    SettingsDataAccess settingsDataAccess;
+    RewashDataAccess rewashDataAccess;
     Crypto enAndDecrypt;
 
     ListView listView;
@@ -37,10 +38,6 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
     ArrayList<String> rewashList;
     Spinner monthSpinner;
     Spinner yearSpinner;
-
-    int monthNumber = 0;
-    int year = 0;
-
     String monthString;
 
     File file;
@@ -50,12 +47,14 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
     TextView fullCountTextView;
     TextView quickCountTextView;
     TextView totalCountTextView;
+    EditText emailRecipientEditText;
 
+    int monthNumber = 0;
+    int year = 0;
     int luxuryCount;
     int fullCount;
     int quickCount;
     int totalRewashCount;
-    EditText emailRecipientEditText;
 
 
 
@@ -64,22 +63,31 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rewashlog_options);
 
-        luxuryCountTextView = (TextView) findViewById(R.id.luxuryCountTextView);
-        fullCountTextView = (TextView) findViewById(R.id.fullCountTextView);
-        quickCountTextView = (TextView) findViewById(R.id.quickCountTextView);
-        totalCountTextView = (TextView) findViewById(R.id.totalCountTextView);
-        emailRecipientEditText = (EditText) findViewById(R.id.emailRecipientEditText);
-
         emailRecipientEditText.setHint(settingsDataAccess.getRecipientEmail());
 
-        enAndDecrypt = new Crypto();
-
+        instantiateTextViews();
+        instantiateClassReferences();
         instantiateMonthSpinner();
         instantiateYearSpinner();
         getEntireRewashList();
         updateListView();
         hideKeyboard();
 
+    }
+
+    private void instantiateTextViews() {
+        luxuryCountTextView = (TextView) findViewById(R.id.luxuryCountTextView);
+        fullCountTextView = (TextView) findViewById(R.id.fullCountTextView);
+        quickCountTextView = (TextView) findViewById(R.id.quickCountTextView);
+        totalCountTextView = (TextView) findViewById(R.id.totalCountTextView);
+        emailRecipientEditText = (EditText) findViewById(R.id.emailRecipientEditText);
+    }
+
+    private void instantiateClassReferences() {
+        employeeDataAccess = new EmployeeDataAccess(this);
+        settingsDataAccess = new SettingsDataAccess(this);
+        rewashDataAccess = new RewashDataAccess(this);
+        enAndDecrypt = new Crypto();
     }
 
 
@@ -222,8 +230,7 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
         totalCountTextView.setText(String.valueOf(luxuryCount + fullCount + quickCount));
         updateListView();
     }
-
-
+    
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
@@ -311,15 +318,12 @@ public class RewashLogOptions extends AppCompatActivity implements AdapterView.O
         fileContents += "Quick: " + quickCount;
         fileContents += "   ";
         fileContents += "Total: " + totalRewashCount;
-
         fileContents += "\n\n\n";
-
         fileContents += "Rewash List \n";
         fileContents += "------------------------------------";
         fileContents += "\n";
         fileContents += "------------------------------------";
         fileContents += "\n";
-
 
         for (int i = 0; i < rewashList.size(); i++) {
             fileContents += rewashList.get(i);
